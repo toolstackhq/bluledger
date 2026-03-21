@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
+import BrandLockup from "./BrandLockup";
 
 function TopHeader() {
   const { appMeta, user, logout } = useAppContext();
@@ -13,10 +14,7 @@ function TopHeader() {
   return (
     <header className="top-header">
       <div className="top-header__inner">
-        <div className="brand-block">
-          <span className="brand-block__name">{appMeta.brandName}</span>
-          <span className="brand-block__subtitle">{appMeta.subtitle}</span>
-        </div>
+        <BrandLockup inverted subtitle={appMeta.subtitle} />
         <div className="top-header__actions">
           <span>Last login: {user.lastLogin}</span>
           <a href={`tel:${appMeta.helpPhone.replace(/\s+/g, "")}`}>Help {appMeta.helpPhone}</a>

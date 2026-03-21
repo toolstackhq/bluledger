@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
+import BrandLockup from "../components/BrandLockup";
 import InfoBanner from "../components/InfoBanner";
 
 function LoginPage() {
@@ -58,8 +59,7 @@ function LoginPage() {
       <div className="login-panel-wrap">
         <div className="login-panel">
           <div className="login-panel__brand">
-            <h1>BluLedger</h1>
-            <p>Digital Banking Demo</p>
+            <BrandLockup large subtitle={appMeta.subtitle} />
           </div>
 
           <form className="form-grid" onSubmit={handleSubmit}>
