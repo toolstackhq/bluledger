@@ -1,0 +1,36 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 28, 38, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 40;
+}
+
+.modal-card {
+  width: min(560px, 100%);
+  background: #fff;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+.modal-card__header {
+  padding: 18px 20px 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.modal-card__header h2 {
+  margin: 0;
+  color: var(--color-header);
+}
+
+.modal-card__body {
+  padding: 18px 20px;
+}
+
+.modal-card__footer {
+  padding: 0 20px 18px;
+}
