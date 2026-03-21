@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BluLedger | Digital Banking Demo</title>
+    <script>
+      (function () {
+        var redirect = window.location.search.match(/[?&]p=([^&]+)/);
+
+        if (!redirect) {
+          return;
+        }
+
+        var targetPath = decodeURIComponent(redirect[1]);
+        var targetQuery = window.location.search
+          .replace(/[?&]p=[^&]*/, "")
+          .replace(/^&/, "?");
+        window.history.replaceState(null, "", targetPath + targetQuery + window.location.hash);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+  </html>

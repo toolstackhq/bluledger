@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="UTF-8" />
+    <title>BluLedger</title>
+    <script>
+      var pathSegmentsToKeep = 1;
+      var locationPath = window.location.pathname
+        .split("/")
+        .slice(0, 1 + pathSegmentsToKeep)
+        .join("/");
+      var redirectPath =
+        locationPath +
+        "/?p=" +
+        encodeURIComponent(
+          window.location.pathname.slice(1).split("/").slice(pathSegmentsToKeep).join("/")
+        ) +
+        (window.location.search ? "&" + window.location.search.slice(1) : "") +
+        window.location.hash;
+
+      window.location.replace(redirectPath);
+    </script>
+  </head>
+  <body></body>
+  </html>

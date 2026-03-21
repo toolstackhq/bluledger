@@ -1,0 +1,10 @@
+node_modules/
+dist/
+
+.DS_Store
+
+1.png
+2.png
+3.png
+images/
+prompt.md
