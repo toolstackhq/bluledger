@@ -5,7 +5,7 @@ import { AppProvider } from "./context/AppContext";
 function App() {
   return (
     <AppProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <AppRouter />
       </BrowserRouter>
     </AppProvider>
