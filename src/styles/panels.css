@@ -354,7 +354,7 @@
 
 .card-record__visual {
   display: grid;
-  gap: 8px;
+  gap: 14px;
   align-content: start;
 }
 
