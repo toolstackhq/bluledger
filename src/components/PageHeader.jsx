@@ -1,7 +1,8 @@
-function PageHeader({ title, subtitle, actions }) {
+function PageHeader({ title, subtitle, actions, eyebrow }) {
   return (
     <div className="page-header">
       <div>
+        {eyebrow ? <div className="page-header__eyebrow">{eyebrow}</div> : null}
         <h1>{title}</h1>
         {subtitle ? <p>{subtitle}</p> : null}
       </div>

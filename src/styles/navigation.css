@@ -1,6 +1,9 @@
 .top-nav {
   background: #f7f8fa;
   border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 55px;
+  z-index: 25;
 }
 
 .top-nav__inner {
@@ -28,6 +31,7 @@
 .top-nav__list a.active {
   color: var(--color-header);
   border-bottom-color: var(--color-accent);
+  background: #fff;
 }
 
 .side-nav {
@@ -35,6 +39,7 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   overflow: hidden;
+  box-shadow: 0 1px 2px var(--color-shadow);
 }
 
 .side-nav__list {

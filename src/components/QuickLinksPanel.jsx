@@ -11,12 +11,22 @@ function toTestId(item) {
 
 function QuickLinksPanel({ links }) {
   return (
-    <SectionPanel title="Quick Links">
+    <SectionPanel
+      title="Quick Links"
+      subtitle="Common tasks and servicing actions"
+    >
       <ul className="quick-links">
         {links.map((link) => (
           <li key={link.id}>
-            <Link to={link.route} data-testid={toTestId(link)}>
-              {link.label}
+            <Link
+              to={link.route}
+              data-testid={toTestId(link)}
+              className="quick-link-card"
+            >
+              <span className="quick-link-card__label">{link.label}</span>
+              <span className="quick-link-card__arrow" aria-hidden="true">
+                ›
+              </span>
             </Link>
             <div className="table-subline">{link.description}</div>
           </li>

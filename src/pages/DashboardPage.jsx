@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { Link } from "react-router-dom";
 import AppShell from "../components/AppShell";
 import PageHeader from "../components/PageHeader";
 import SummaryStrip from "../components/SummaryStrip";
@@ -67,8 +68,19 @@ function DashboardPage() {
     >
       <div className="page-stack">
         <PageHeader
+          eyebrow="Digital Banking"
           title="Account Summary"
           subtitle={`Good morning, ${user.preferredName}. Review balances, recent activity and pending items.`}
+          actions={
+            <>
+              <Link className="button-secondary button-inline-link" to="/statements">
+                View statements
+              </Link>
+              <Link className="button-primary button-inline-link" to="/transfers">
+                Transfer money
+              </Link>
+            </>
+          }
         />
 
         {banners.map((banner) => (
@@ -82,11 +94,17 @@ function DashboardPage() {
 
         <SummaryStrip items={summaryItems} />
 
-        <SectionPanel title="Accounts">
+        <SectionPanel
+          title="Accounts"
+          subtitle="Balances and availability across your linked products"
+        >
           <AccountSummaryTable accounts={accounts} />
         </SectionPanel>
 
-        <SectionPanel title="Recent Transactions">
+        <SectionPanel
+          title="Recent Transactions"
+          subtitle="Latest posted and pending account activity"
+        >
           {recentTransactions.length > 0 ? (
             <RecentTransactionsTable transactions={recentTransactions} />
           ) : (

@@ -2,6 +2,9 @@
   background: var(--color-header);
   color: #f4f7fa;
   border-bottom: 1px solid #16202b;
+  position: sticky;
+  top: 0;
+  z-index: 30;
 }
 
 .top-header__inner {
@@ -131,6 +134,15 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
+}
+
+.page-header__eyebrow {
+  margin-bottom: 6px;
+  color: var(--color-accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .page-header h1 {
