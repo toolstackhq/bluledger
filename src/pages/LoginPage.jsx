@@ -19,6 +19,13 @@ function LoginPage() {
     setRememberCustomerId(Boolean(rememberedCustomerId));
   }, [rememberedCustomerId]);
 
+  function handlePrefill(testUser) {
+    setCustomerId(testUser.customerId);
+    setPassword(testUser.password);
+    setErrors({});
+    setShowTestUsers(false);
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     const nextErrors = {};
@@ -101,39 +108,11 @@ function LoginPage() {
               <button
                 type="button"
                 className="text-link-button"
-                onClick={() => setShowTestUsers((current) => !current)}
+                onClick={() => setShowTestUsers(true)}
                 data-testid="login-view-test-users"
               >
                 View Test Users
               </button>
-              {showTestUsers ? (
-                <div className="test-users-popover">
-                  <div className="test-users-popover__header">
-                    <strong>Test Users</strong>
-                    <button
-                      type="button"
-                      className="text-link-button"
-                      onClick={() => setShowTestUsers(false)}
-                    >
-                      Close
-                    </button>
-                  </div>
-                  <div className="test-users-popover__list">
-                    {testUsers.map((testUser) => (
-                      <div key={testUser.customerId} className="test-users-popover__item">
-                        <div className="test-users-popover__title">
-                          {testUser.scenarioLabel}
-                        </div>
-                        <div className="table-subline">{testUser.scenarioDescription}</div>
-                        <div className="test-users-popover__credentials">
-                          <span>Customer ID: {testUser.customerId}</span>
-                          <span>Password: {testUser.password}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
             </div>
             <InfoBanner
               title="Security note"
@@ -147,6 +126,47 @@ function LoginPage() {
           Need assistance? Call {appMeta.helpPhone}. Support hours: {appMeta.supportHours}.
         </div>
       </div>
+
+      {showTestUsers ? (
+        <div className="modal-overlay" onClick={() => setShowTestUsers(false)}>
+          <div
+            className="test-users-dialog"
+            onClick={(event) => event.stopPropagation()}
+            data-testid="login-test-users-modal"
+          >
+            <div className="test-users-dialog__header">
+              <div>
+                <h2>Test Users</h2>
+                <p>Select a persona to prefill the sign-in form.</p>
+              </div>
+              <button
+                type="button"
+                className="button-secondary"
+                onClick={() => setShowTestUsers(false)}
+              >
+                Close
+              </button>
+            </div>
+            <div className="test-users-dialog__list">
+              {testUsers.map((testUser) => (
+                <button
+                  key={testUser.customerId}
+                  type="button"
+                  className="test-users-dialog__item"
+                  onClick={() => handlePrefill(testUser)}
+                >
+                  <div className="test-users-dialog__title">{testUser.scenarioLabel}</div>
+                  <div className="table-subline">{testUser.scenarioDescription}</div>
+                  <div className="test-users-dialog__credentials">
+                    <span>Customer ID: {testUser.customerId}</span>
+                    <span>Password: {testUser.password}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
