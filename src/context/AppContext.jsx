@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import bankData from "../data/bankData.json";
+import testUsers from "../data/testUsers.json";
 import { generateReceiptNumber } from "../utils/receipt";
 import {
   clearRememberedCustomerId,
@@ -27,28 +28,52 @@ function mergeCollectionById(defaultItems, storedItems) {
   });
 }
 
-function buildDefaultMutableState() {
+function getDefaultTestUser() {
+  return testUsers[0];
+}
+
+function getTestUserRecord(customerId) {
+  return testUsers.find((testUser) => testUser.customerId === customerId) || null;
+}
+
+function buildMutableStateForUser(testUser, sessionOverrides = {}) {
   return {
     session: {
       isAuthenticated: false,
       customerId: "",
       rememberCustomerId: false,
+      ...sessionOverrides,
     },
-    profile: cloneValue(bankData.profile),
-    accounts: cloneValue(bankData.accounts),
-    cards: cloneValue(bankData.cards),
-    settings: cloneValue(bankData.settings),
-    preferences: cloneValue(bankData.preferences),
-    transactions: cloneValue(bankData.transactions),
+    activeCustomerId: testUser.customerId,
+    user: cloneValue(testUser.user),
+    profile: cloneValue(testUser.profile),
+    accounts: cloneValue(testUser.accounts),
+    cards: cloneValue(testUser.cards),
+    payees: cloneValue(testUser.payees),
+    alerts: cloneValue(testUser.alerts),
+    banners: cloneValue(testUser.banners),
+    settings: cloneValue(testUser.settings),
+    preferences: cloneValue(testUser.preferences),
+    transactions: cloneValue(testUser.transactions),
+    statements: cloneValue(testUser.statements),
+    utilityPanel: cloneValue(testUser.utilityPanel),
+    activitySummary: cloneValue(testUser.activitySummary),
     transferDraft: null,
-    receiptSeed: cloneValue(bankData.receiptSeed),
+    receiptSeed: cloneValue(testUser.receiptSeed),
     toast: null,
   };
 }
 
+function buildDefaultMutableState() {
+  return buildMutableStateForUser(getDefaultTestUser());
+}
+
 function getInitialMutableState() {
   const storedState = loadStoredAppState();
-  const defaultState = buildDefaultMutableState();
+  const baseUser =
+    getTestUserRecord(storedState?.activeCustomerId || storedState?.session?.customerId) ||
+    getDefaultTestUser();
+  const defaultState = buildMutableStateForUser(baseUser);
 
   if (!storedState) {
     return defaultState;
@@ -66,6 +91,16 @@ function getInitialMutableState() {
   };
 }
 
+function deriveUpcomingPayments(state) {
+  const pendingScheduledPayments = state.transactions.filter(
+    (transaction) =>
+      transaction.status === "Pending" &&
+      transaction.type === "Scheduled payment"
+  ).length;
+
+  return state.activitySummary?.upcomingPayments ?? pendingScheduledPayments;
+}
+
 export function AppProvider({ children }) {
   const [state, setState] = useState(getInitialMutableState);
   const [rememberedCustomerId, setRememberedCustomerId] = useState(
@@ -79,14 +114,14 @@ export function AppProvider({ children }) {
   const isAuthenticated = state.session.isAuthenticated;
 
   const dashboardSummary = useMemo(() => {
-    const nonCreditAccounts = state.accounts.filter(
-      (account) => account.type !== "credit"
+    const liquidAccounts = state.accounts.filter(
+      (account) => !["credit", "loan"].includes(account.type)
     );
-    const totalBalance = nonCreditAccounts.reduce(
+    const totalBalance = liquidAccounts.reduce(
       (total, account) => total + Number(account.currentBalance),
       0
     );
-    const availableFunds = nonCreditAccounts.reduce(
+    const availableFunds = liquidAccounts.reduce(
       (total, account) => total + Number(account.availableBalance),
       0
     );
@@ -98,9 +133,9 @@ export function AppProvider({ children }) {
       totalBalance,
       availableFunds,
       pendingTransactions,
-      upcomingPayments: bankData.activitySummary.upcomingPayments,
+      upcomingPayments: deriveUpcomingPayments(state),
     };
-  }, [state.accounts, state.transactions]);
+  }, [state]);
 
   function showToast(message, tone = "success") {
     setState((currentState) => ({
@@ -121,11 +156,9 @@ export function AppProvider({ children }) {
   }
 
   function login(customerId, password, rememberCustomerIdSelection) {
-    const credentialsMatch =
-      customerId === bankData.demoCredentials.customerId &&
-      password === bankData.demoCredentials.password;
+    const selectedUser = getTestUserRecord(customerId);
 
-    if (!credentialsMatch) {
+    if (!selectedUser || password !== selectedUser.password) {
       return {
         ok: false,
         message: "Customer ID or password is incorrect.",
@@ -140,14 +173,13 @@ export function AppProvider({ children }) {
       setRememberedCustomerId("");
     }
 
-    setState((currentState) => ({
-      ...currentState,
-      session: {
+    setState(
+      buildMutableStateForUser(selectedUser, {
         isAuthenticated: true,
         customerId,
         rememberCustomerId: rememberCustomerIdSelection,
-      },
-    }));
+      })
+    );
 
     return { ok: true };
   }
@@ -239,7 +271,7 @@ export function AppProvider({ children }) {
         ? currentState.accounts.find((account) => account.id === draft.destinationId)
         : null;
       const destinationPayee = !isOwnAccount
-        ? bankData.payees.find((payee) => payee.id === draft.destinationId)
+        ? currentState.payees.find((payee) => payee.id === draft.destinationId)
         : null;
 
       const status =
@@ -346,26 +378,31 @@ export function AppProvider({ children }) {
 
   const value = {
     appMeta: bankData.appMeta,
-    user: bankData.user,
-    demoCredentials: bankData.demoCredentials,
-    payees: bankData.payees,
-    alerts: bankData.alerts,
-    banners: bankData.banners,
     quickLinks: bankData.quickLinks,
-    statements: bankData.statements,
-    utilityPanel: bankData.utilityPanel,
     cardOptions: bankData.cardOptions,
     transferDefaults: bankData.transferDefaults,
+    user: state.user,
+    profile: state.profile,
     accounts: state.accounts,
     cards: state.cards,
-    profile: state.profile,
+    payees: state.payees,
+    alerts: state.alerts,
+    banners: state.banners,
     settings: state.settings,
     preferences: state.preferences,
     transactions: state.transactions,
+    statements: state.statements,
+    utilityPanel: state.utilityPanel,
     transferDraft: state.transferDraft,
     toast: state.toast,
     dashboardSummary,
     rememberedCustomerId,
+    testUsers: testUsers.map((testUser) => ({
+      customerId: testUser.customerId,
+      password: testUser.password,
+      scenarioLabel: testUser.scenarioLabel,
+      scenarioDescription: testUser.scenarioDescription,
+    })),
     isAuthenticated,
     login,
     logout,

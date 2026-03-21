@@ -4,7 +4,7 @@ import { useAppContext } from "../context/AppContext";
 import InfoBanner from "../components/InfoBanner";
 
 function LoginPage() {
-  const { appMeta, demoCredentials, rememberedCustomerId, login } = useAppContext();
+  const { appMeta, rememberedCustomerId, testUsers, login } = useAppContext();
   const navigate = useNavigate();
   const [customerId, setCustomerId] = useState(rememberedCustomerId || "");
   const [password, setPassword] = useState("");
@@ -12,6 +12,7 @@ function LoginPage() {
     Boolean(rememberedCustomerId)
   );
   const [errors, setErrors] = useState({});
+  const [showTestUsers, setShowTestUsers] = useState(false);
 
   useEffect(() => {
     setCustomerId(rememberedCustomerId || "");
@@ -96,10 +97,44 @@ function LoginPage() {
           </form>
 
           <div className="login-panel__meta">
-            <InfoBanner
-              title="Demo credentials"
-              message={`Customer ID: ${demoCredentials.customerId} | Password: ${demoCredentials.password}`}
-            />
+            <div className="login-panel__assist">
+              <button
+                type="button"
+                className="text-link-button"
+                onClick={() => setShowTestUsers((current) => !current)}
+                data-testid="login-view-test-users"
+              >
+                View Test Users
+              </button>
+              {showTestUsers ? (
+                <div className="test-users-popover">
+                  <div className="test-users-popover__header">
+                    <strong>Test Users</strong>
+                    <button
+                      type="button"
+                      className="text-link-button"
+                      onClick={() => setShowTestUsers(false)}
+                    >
+                      Close
+                    </button>
+                  </div>
+                  <div className="test-users-popover__list">
+                    {testUsers.map((testUser) => (
+                      <div key={testUser.customerId} className="test-users-popover__item">
+                        <div className="test-users-popover__title">
+                          {testUser.scenarioLabel}
+                        </div>
+                        <div className="table-subline">{testUser.scenarioDescription}</div>
+                        <div className="test-users-popover__credentials">
+                          <span>Customer ID: {testUser.customerId}</span>
+                          <span>Password: {testUser.password}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+            </div>
             <InfoBanner
               title="Security note"
               message={appMeta.securityNotice}

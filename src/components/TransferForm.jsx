@@ -9,7 +9,9 @@ function TransferForm({
   initialDraft,
   onSubmit,
 }) {
-  const sourceAccounts = accounts.filter((account) => account.type !== "credit");
+  const sourceAccounts = accounts.filter(
+    (account) => !["credit", "loan"].includes(account.type)
+  );
   const defaultFromAccount = sourceAccounts[0]?.id || "";
 
   const [formValues, setFormValues] = useState({
@@ -169,6 +171,9 @@ function TransferForm({
             </option>
           ))}
         </select>
+        {formValues.destinationType === "payee" && payees.length === 0 ? (
+          <span className="form-hint">No saved payees are available for this customer.</span>
+        ) : null}
         {errors.destinationId ? <span className="form-error">{errors.destinationId}</span> : null}
       </div>
 

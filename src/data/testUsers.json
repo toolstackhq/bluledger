@@ -1,0 +1,1056 @@
+[
+  {
+    "customerId": "92718463",
+    "password": "Harbour!92",
+    "scenarioLabel": "Everyday banking with savings and cards",
+    "scenarioDescription": "Two cards, an online saver, and an offset account.",
+    "user": {
+      "firstName": "Alicia",
+      "lastName": "Warren",
+      "preferredName": "Alicia",
+      "customerNumber": "92718463",
+      "relationshipSince": "2016",
+      "lastLogin": "18 Mar 2025, 8:42 am"
+    },
+    "profile": {
+      "fullName": "Alicia Grace Warren",
+      "preferredName": "Alicia",
+      "email": "alicia.warren@bluledger-demo.au",
+      "mobile": "0412 555 084",
+      "addressLine1": "14 Kinsale Street",
+      "suburb": "Hawthorn East",
+      "state": "VIC",
+      "postcode": "3123",
+      "employer": "Southbank Allied Health",
+      "occupation": "Operations Coordinator",
+      "preferredContactMethod": "Email"
+    },
+    "accounts": [
+      {
+        "id": "acct-everyday",
+        "slug": "everyday",
+        "productName": "Everyday Account",
+        "nickname": "Daily Banking",
+        "accountNumber": "48392017",
+        "bsb": "083-441",
+        "currentBalance": 6842.73,
+        "availableBalance": 6842.73,
+        "status": "Active",
+        "type": "transaction"
+      },
+      {
+        "id": "acct-saver",
+        "slug": "saver",
+        "productName": "Online Saver",
+        "nickname": "Rainy Day Saver",
+        "accountNumber": "77149203",
+        "bsb": "083-441",
+        "currentBalance": 24560.11,
+        "availableBalance": 24560.11,
+        "status": "Active",
+        "type": "savings"
+      },
+      {
+        "id": "acct-offset",
+        "slug": "offset",
+        "productName": "Home Offset Account",
+        "nickname": "Mortgage Offset",
+        "accountNumber": "62258394",
+        "bsb": "083-441",
+        "currentBalance": 18340.89,
+        "availableBalance": 18340.89,
+        "status": "Active",
+        "type": "offset"
+      },
+      {
+        "id": "acct-credit",
+        "slug": "credit",
+        "productName": "BluLedger Platinum Card",
+        "nickname": "Primary Credit Card",
+        "accountNumber": "99440182",
+        "bsb": "N/A",
+        "currentBalance": -1243.55,
+        "availableBalance": 8756.45,
+        "status": "Open",
+        "type": "credit"
+      }
+    ],
+    "cards": [
+      {
+        "id": "card-primary",
+        "nickname": "Everyday Visa Debit",
+        "maskedNumber": "4929 18•• •••• 1844",
+        "demoCardNumber": "4929 1800 2400 1844",
+        "lastFour": "1844",
+        "expiry": "11/27",
+        "linkedAccountId": "acct-everyday",
+        "cardType": "Visa Debit",
+        "status": "Active",
+        "internationalEnabled": true,
+        "replacementInProgress": false,
+        "dailyLimit": 1200,
+        "onlineLimit": 2500
+      },
+      {
+        "id": "card-platinum",
+        "nickname": "Platinum Rewards",
+        "maskedNumber": "5238 41•• •••• 5512",
+        "demoCardNumber": "5238 4100 3200 5512",
+        "lastFour": "5512",
+        "expiry": "08/28",
+        "linkedAccountId": "acct-credit",
+        "cardType": "Mastercard Credit",
+        "status": "Locked",
+        "internationalEnabled": false,
+        "replacementInProgress": true,
+        "dailyLimit": 2000,
+        "onlineLimit": 4000
+      }
+    ],
+    "payees": [
+      {
+        "id": "payee-rent",
+        "name": "Laneway Property Group",
+        "nickname": "Apartment Rent",
+        "bsb": "062-000",
+        "accountNumber": "44572819"
+      },
+      {
+        "id": "payee-energy",
+        "name": "Metro Energy Services",
+        "nickname": "Electricity",
+        "bsb": "081-112",
+        "accountNumber": "33910482"
+      },
+      {
+        "id": "payee-insurance",
+        "name": "Harbour Mutual Insurance",
+        "nickname": "Home Insurance",
+        "bsb": "034-550",
+        "accountNumber": "29071463"
+      },
+      {
+        "id": "payee-family",
+        "name": "Samuel Warren",
+        "nickname": "Sam",
+        "bsb": "063-444",
+        "accountNumber": "92017455"
+      },
+      {
+        "id": "payee-childcare",
+        "name": "Little Banks Early Learning",
+        "nickname": "Childcare",
+        "bsb": "015-201",
+        "accountNumber": "77001294"
+      }
+    ],
+    "transactions": [
+      {
+        "id": "txn-001",
+        "accountId": "acct-everyday",
+        "date": "2025-03-18",
+        "description": "Salary Deposit",
+        "reference": "SOUTHBANK PAYROLL",
+        "amount": 3720,
+        "type": "Credit",
+        "status": "Completed",
+        "balance": 6842.73,
+        "category": "salary"
+      },
+      {
+        "id": "txn-002",
+        "accountId": "acct-everyday",
+        "date": "2025-03-18",
+        "description": "Market Lane Coffee",
+        "reference": "CARD 1844",
+        "amount": -6.8,
+        "type": "Card payment",
+        "status": "Completed",
+        "balance": 3122.73,
+        "category": "coffee"
+      },
+      {
+        "id": "txn-003",
+        "accountId": "acct-everyday",
+        "date": "2025-03-17",
+        "description": "Freshline Supermarket",
+        "reference": "CARD 1844",
+        "amount": -148.42,
+        "type": "Debit",
+        "status": "Completed",
+        "balance": 3129.53,
+        "category": "supermarket"
+      },
+      {
+        "id": "txn-004",
+        "accountId": "acct-everyday",
+        "date": "2025-03-16",
+        "description": "Transfer to Online Saver",
+        "reference": "WEEKLY SAVE",
+        "amount": -450,
+        "type": "Transfer",
+        "status": "Completed",
+        "balance": 3345.25,
+        "category": "savings transfer"
+      },
+      {
+        "id": "txn-005",
+        "accountId": "acct-saver",
+        "date": "2025-03-16",
+        "description": "Transfer from Everyday Account",
+        "reference": "WEEKLY SAVE",
+        "amount": 450,
+        "type": "Transfer",
+        "status": "Completed",
+        "balance": 24560.11,
+        "category": "savings transfer"
+      },
+      {
+        "id": "txn-006",
+        "accountId": "acct-everyday",
+        "date": "2025-03-15",
+        "description": "Little Banks Early Learning",
+        "reference": "MARCH FEES",
+        "amount": -385,
+        "type": "Debit",
+        "status": "Completed",
+        "balance": 3820,
+        "category": "childcare"
+      },
+      {
+        "id": "txn-007",
+        "accountId": "acct-everyday",
+        "date": "2025-03-14",
+        "description": "Metro Energy Services",
+        "reference": "ELEC MAR",
+        "amount": -128.64,
+        "type": "Debit",
+        "status": "Completed",
+        "balance": 4205,
+        "category": "electricity"
+      },
+      {
+        "id": "txn-008",
+        "accountId": "acct-everyday",
+        "date": "2025-03-10",
+        "description": "Laneway Property Group",
+        "reference": "RENT 1008",
+        "amount": -1840,
+        "type": "Debit",
+        "status": "Completed",
+        "balance": 4669.96,
+        "category": "rent"
+      },
+      {
+        "id": "txn-009",
+        "accountId": "acct-offset",
+        "date": "2025-03-18",
+        "description": "Scheduled Mortgage Sweep",
+        "reference": "HOME LOAN OFFSET",
+        "amount": -1250,
+        "type": "Scheduled payment",
+        "status": "Pending",
+        "balance": 18340.89,
+        "category": "mortgage"
+      },
+      {
+        "id": "txn-010",
+        "accountId": "acct-credit",
+        "date": "2025-03-17",
+        "description": "Bayside Furnishings",
+        "reference": "CARD 5512",
+        "amount": -239.95,
+        "type": "Card payment",
+        "status": "Completed",
+        "balance": -1243.55,
+        "category": "shopping"
+      },
+      {
+        "id": "txn-011",
+        "accountId": "acct-credit",
+        "date": "2025-03-16",
+        "description": "Card Repayment",
+        "reference": "AUTO PAYMENT",
+        "amount": 600,
+        "type": "Credit",
+        "status": "Completed",
+        "balance": -1003.6,
+        "category": "card repayment"
+      },
+      {
+        "id": "txn-012",
+        "accountId": "acct-credit",
+        "date": "2025-03-15",
+        "description": "Jetline Travel",
+        "reference": "CARD 5512",
+        "amount": -322.4,
+        "type": "Card payment",
+        "status": "Completed",
+        "balance": -1603.6,
+        "category": "travel"
+      }
+    ],
+    "alerts": [
+      {
+        "id": "alert-1",
+        "title": "Scheduled Payment Due",
+        "message": "Your mortgage sweep from Home Offset Account is due on 19 Mar 2025.",
+        "tone": "warning"
+      },
+      {
+        "id": "alert-2",
+        "title": "Card Replacement in Progress",
+        "message": "A replacement is being prepared for your Platinum Rewards card ending 5512.",
+        "tone": "info"
+      },
+      {
+        "id": "alert-3",
+        "title": "Profile Review Recommended",
+        "message": "Please confirm your contact details before the end of the month.",
+        "tone": "neutral"
+      }
+    ],
+    "banners": [
+      {
+        "id": "banner-1",
+        "title": "Security Reminder",
+        "message": "BluLedger will never ask you to disclose one-time passcodes by phone or email.",
+        "tone": "info"
+      },
+      {
+        "id": "banner-2",
+        "title": "New Statement Available",
+        "message": "Your February Platinum Card statement is ready to view and download.",
+        "tone": "success"
+      }
+    ],
+    "settings": {
+      "security": {
+        "smsAlerts": true,
+        "emailNotifications": true,
+        "twoStepInfo": "Enabled for login challenges on new devices.",
+        "trustedDevices": 2
+      },
+      "notifications": {
+        "paymentReminders": true,
+        "lowBalanceAlerts": false,
+        "cardAlerts": true
+      },
+      "statements": {
+        "paperStatements": false,
+        "statementCycle": "Monthly",
+        "deliveryMethod": "eStatement"
+      }
+    },
+    "preferences": {
+      "preferredContactMethod": "Email",
+      "marketingOptIn": false,
+      "sessionTimeoutMinutes": 10,
+      "appearance": "Standard",
+      "accessibility": "Default zoom",
+      "darkMode": false
+    },
+    "activitySummary": {
+      "upcomingPayments": 2
+    },
+    "statements": [
+      {
+        "id": "stmt-everyday-2025-03",
+        "accountId": "acct-everyday",
+        "statementName": "Everyday Account Statement",
+        "periodStart": "2025-03-01",
+        "periodEnd": "2025-03-18",
+        "issueDate": "2025-03-19",
+        "openingBalance": 6715.54,
+        "closingBalance": 6842.73,
+        "totalCredits": 3720,
+        "totalDebits": 3592.81,
+        "formatOptions": ["PDF", "CSV"]
+      },
+      {
+        "id": "stmt-saver-2025-03",
+        "accountId": "acct-saver",
+        "statementName": "Online Saver Statement",
+        "periodStart": "2025-03-01",
+        "periodEnd": "2025-03-18",
+        "issueDate": "2025-03-19",
+        "openingBalance": 24110.11,
+        "closingBalance": 24560.11,
+        "totalCredits": 450,
+        "totalDebits": 0,
+        "formatOptions": ["PDF", "CSV"]
+      },
+      {
+        "id": "stmt-offset-2025-03",
+        "accountId": "acct-offset",
+        "statementName": "Home Offset Account Statement",
+        "periodStart": "2025-03-01",
+        "periodEnd": "2025-03-18",
+        "issueDate": "2025-03-19",
+        "openingBalance": 19590.89,
+        "closingBalance": 18340.89,
+        "totalCredits": 0,
+        "totalDebits": 1250,
+        "formatOptions": ["PDF", "CSV"]
+      },
+      {
+        "id": "stmt-credit-2025-03",
+        "accountId": "acct-credit",
+        "statementName": "Platinum Card Statement",
+        "periodStart": "2025-03-01",
+        "periodEnd": "2025-03-18",
+        "issueDate": "2025-03-19",
+        "openingBalance": -1281.2,
+        "closingBalance": -1243.55,
+        "totalCredits": 600,
+        "totalDebits": 562.35,
+        "formatOptions": ["PDF", "CSV"]
+      }
+    ],
+    "receiptSeed": {
+      "prefix": "BL",
+      "nextSequence": 483921
+    },
+    "utilityPanel": {
+      "title": "Useful Information",
+      "items": [
+        {
+          "id": "utility-1",
+          "label": "Last login",
+          "value": "18 Mar 2025, 8:42 am"
+        },
+        {
+          "id": "utility-2",
+          "label": "Help and support",
+          "value": "1300 555 014"
+        },
+        {
+          "id": "utility-3",
+          "label": "Support hours",
+          "value": "Mon-Fri 8:00am to 8:00pm AEST"
+        },
+        {
+          "id": "utility-4",
+          "label": "Scheduled items",
+          "value": "2 pending actions"
+        }
+      ]
+    }
+  },
+  {
+    "customerId": "38451209",
+    "password": "Jacaranda#47",
+    "scenarioLabel": "Debit card, credit card and home loan",
+    "scenarioDescription": "One debit card, one credit card, a saver, and an active home loan account.",
+    "user": {
+      "firstName": "Marcus",
+      "lastName": "Cole",
+      "preferredName": "Marcus",
+      "customerNumber": "38451209",
+      "relationshipSince": "2019",
+      "lastLogin": "19 Mar 2025, 7:18 am"
+    },
+    "profile": {
+      "fullName": "Marcus Daniel Cole",
+      "preferredName": "Marcus",
+      "email": "marcus.cole@bluledger-demo.au",
+      "mobile": "0408 555 271",
+      "addressLine1": "22 Preston Avenue",
+      "suburb": "New Farm",
+      "state": "QLD",
+      "postcode": "4005",
+      "employer": "Riverfront Engineering",
+      "occupation": "Project Supervisor",
+      "preferredContactMethod": "Mobile"
+    },
+    "accounts": [
+      {
+        "id": "acct-everyday",
+        "slug": "everyday",
+        "productName": "Everyday Account",
+        "nickname": "Bills Account",
+        "accountNumber": "55018392",
+        "bsb": "083-441",
+        "currentBalance": 4210.6,
+        "availableBalance": 4210.6,
+        "status": "Active",
+        "type": "transaction"
+      },
+      {
+        "id": "acct-saver",
+        "slug": "saver",
+        "productName": "Online Saver",
+        "nickname": "Holiday Fund",
+        "accountNumber": "88341027",
+        "bsb": "083-441",
+        "currentBalance": 9320.14,
+        "availableBalance": 9320.14,
+        "status": "Active",
+        "type": "savings"
+      },
+      {
+        "id": "acct-loan",
+        "slug": "home-loan",
+        "productName": "Home Loan Variable",
+        "nickname": "Primary Home Loan",
+        "accountNumber": "77620114",
+        "bsb": "N/A",
+        "currentBalance": -482350.14,
+        "availableBalance": 0,
+        "status": "Active",
+        "type": "loan"
+      },
+      {
+        "id": "acct-credit",
+        "slug": "credit",
+        "productName": "BluLedger Rewards Card",
+        "nickname": "Rewards Credit Card",
+        "accountNumber": "99141762",
+        "bsb": "N/A",
+        "currentBalance": -2386.42,
+        "availableBalance": 5613.58,
+        "status": "Open",
+        "type": "credit"
+      }
+    ],
+    "cards": [
+      {
+        "id": "card-debit",
+        "nickname": "Everyday Visa Debit",
+        "maskedNumber": "4845 10•• •••• 2211",
+        "demoCardNumber": "4845 1000 3100 2211",
+        "lastFour": "2211",
+        "expiry": "05/28",
+        "linkedAccountId": "acct-everyday",
+        "cardType": "Visa Debit",
+        "status": "Active",
+        "internationalEnabled": true,
+        "replacementInProgress": false,
+        "dailyLimit": 1000,
+        "onlineLimit": 2200
+      },
+      {
+        "id": "card-credit",
+        "nickname": "Rewards Mastercard",
+        "maskedNumber": "5338 92•• •••• 7714",
+        "demoCardNumber": "5338 9200 4100 7714",
+        "lastFour": "7714",
+        "expiry": "02/29",
+        "linkedAccountId": "acct-credit",
+        "cardType": "Mastercard Credit",
+        "status": "Active",
+        "internationalEnabled": false,
+        "replacementInProgress": false,
+        "dailyLimit": 1800,
+        "onlineLimit": 3500
+      }
+    ],
+    "payees": [
+      {
+        "id": "payee-home-loan",
+        "name": "BluLedger Loan Services",
+        "nickname": "Extra home loan payment",
+        "bsb": "083-441",
+        "accountNumber": "77620114"
+      },
+      {
+        "id": "payee-energy",
+        "name": "Northern Utilities",
+        "nickname": "Electricity",
+        "bsb": "021-909",
+        "accountNumber": "22390118"
+      },
+      {
+        "id": "payee-family",
+        "name": "Sophie Cole",
+        "nickname": "Sophie",
+        "bsb": "014-820",
+        "accountNumber": "91008231"
+      }
+    ],
+    "transactions": [
+      {
+        "id": "txn-m-001",
+        "accountId": "acct-everyday",
+        "date": "2025-03-18",
+        "description": "Salary Deposit",
+        "reference": "RIVERFRONT ENG",
+        "amount": 4580,
+        "type": "Credit",
+        "status": "Completed",
+        "balance": 4210.6,
+        "category": "salary"
+      },
+      {
+        "id": "txn-m-002",
+        "accountId": "acct-everyday",
+        "date": "2025-03-17",
+        "description": "Northside Supermarket",
+        "reference": "CARD 2211",
+        "amount": -164.27,
+        "type": "Card payment",
+        "status": "Completed",
+        "balance": -369.4,
+        "category": "supermarket"
+      },
+      {
+        "id": "txn-m-003",
+        "accountId": "acct-everyday",
+        "date": "2025-03-16",
+        "description": "Transfer to Holiday Fund",
+        "reference": "MARCH SAVE",
+        "amount": -300,
+        "type": "Transfer",
+        "status": "Completed",
+        "balance": -205.13,
+        "category": "savings transfer"
+      },
+      {
+        "id": "txn-m-004",
+        "accountId": "acct-saver",
+        "date": "2025-03-16",
+        "description": "Transfer from Everyday Account",
+        "reference": "MARCH SAVE",
+        "amount": 300,
+        "type": "Transfer",
+        "status": "Completed",
+        "balance": 9320.14,
+        "category": "savings transfer"
+      },
+      {
+        "id": "txn-m-005",
+        "accountId": "acct-loan",
+        "date": "2025-03-19",
+        "description": "Scheduled Home Loan Repayment",
+        "reference": "MONTHLY REPAYMENT",
+        "amount": 0,
+        "type": "Scheduled payment",
+        "status": "Pending",
+        "balance": -482350.14,
+        "category": "home loan"
+      },
+      {
+        "id": "txn-m-006",
+        "accountId": "acct-loan",
+        "date": "2025-03-03",
+        "description": "Home Loan Repayment",
+        "reference": "MONTHLY REPAYMENT",
+        "amount": 2280,
+        "type": "Credit",
+        "status": "Completed",
+        "balance": -482350.14,
+        "category": "home loan"
+      },
+      {
+        "id": "txn-m-007",
+        "accountId": "acct-credit",
+        "date": "2025-03-18",
+        "description": "Bluewater Airlines",
+        "reference": "CARD 7714",
+        "amount": -612.3,
+        "type": "Card payment",
+        "status": "Completed",
+        "balance": -2386.42,
+        "category": "travel"
+      },
+      {
+        "id": "txn-m-008",
+        "accountId": "acct-credit",
+        "date": "2025-03-15",
+        "description": "Card Repayment",
+        "reference": "AUTO PAYMENT",
+        "amount": 750,
+        "type": "Credit",
+        "status": "Completed",
+        "balance": -1774.12,
+        "category": "card repayment"
+      },
+      {
+        "id": "txn-m-009",
+        "accountId": "acct-credit",
+        "date": "2025-03-12",
+        "description": "Dockside Hardware",
+        "reference": "CARD 7714",
+        "amount": -184.6,
+        "type": "Card payment",
+        "status": "Completed",
+        "balance": -2524.12,
+        "category": "shopping"
+      },
+      {
+        "id": "txn-m-010",
+        "accountId": "acct-everyday",
+        "date": "2025-03-14",
+        "description": "Northern Utilities",
+        "reference": "POWER MAR",
+        "amount": -132.55,
+        "type": "Debit",
+        "status": "Completed",
+        "balance": 94.87,
+        "category": "electricity"
+      }
+    ],
+    "alerts": [
+      {
+        "id": "alert-1",
+        "title": "Home Loan Repayment Due",
+        "message": "Your scheduled repayment for Home Loan Variable is due tomorrow.",
+        "tone": "warning"
+      },
+      {
+        "id": "alert-2",
+        "title": "Credit Card Payment Due",
+        "message": "A minimum payment is due on your Rewards Credit Card in 4 days.",
+        "tone": "info"
+      }
+    ],
+    "banners": [
+      {
+        "id": "banner-1",
+        "title": "Loan offset reminder",
+        "message": "Consider transferring extra funds to reduce the interest charged on your home loan.",
+        "tone": "info"
+      }
+    ],
+    "settings": {
+      "security": {
+        "smsAlerts": true,
+        "emailNotifications": false,
+        "twoStepInfo": "Enabled for login challenges on new devices.",
+        "trustedDevices": 1
+      },
+      "notifications": {
+        "paymentReminders": true,
+        "lowBalanceAlerts": true,
+        "cardAlerts": true
+      },
+      "statements": {
+        "paperStatements": false,
+        "statementCycle": "Monthly",
+        "deliveryMethod": "eStatement"
+      }
+    },
+    "preferences": {
+      "preferredContactMethod": "Mobile",
+      "marketingOptIn": false,
+      "sessionTimeoutMinutes": 10,
+      "appearance": "Standard",
+      "accessibility": "Default zoom",
+      "darkMode": false
+    },
+    "activitySummary": {
+      "upcomingPayments": 2
+    },
+    "statements": [
+      {
+        "id": "stmt-m-everyday",
+        "accountId": "acct-everyday",
+        "statementName": "Everyday Account Statement",
+        "periodStart": "2025-03-01",
+        "periodEnd": "2025-03-18",
+        "issueDate": "2025-03-19",
+        "openingBalance": 110.6,
+        "closingBalance": 4210.6,
+        "totalCredits": 4580,
+        "totalDebits": 480,
+        "formatOptions": ["PDF", "CSV"]
+      },
+      {
+        "id": "stmt-m-loan",
+        "accountId": "acct-loan",
+        "statementName": "Home Loan Variable Statement",
+        "periodStart": "2025-03-01",
+        "periodEnd": "2025-03-18",
+        "issueDate": "2025-03-19",
+        "openingBalance": -484630.14,
+        "closingBalance": -482350.14,
+        "totalCredits": 2280,
+        "totalDebits": 0,
+        "formatOptions": ["PDF", "CSV"]
+      },
+      {
+        "id": "stmt-m-credit",
+        "accountId": "acct-credit",
+        "statementName": "Rewards Credit Card Statement",
+        "periodStart": "2025-03-01",
+        "periodEnd": "2025-03-18",
+        "issueDate": "2025-03-19",
+        "openingBalance": -2327.22,
+        "closingBalance": -2386.42,
+        "totalCredits": 750,
+        "totalDebits": 809.2,
+        "formatOptions": ["PDF", "CSV"]
+      }
+    ],
+    "receiptSeed": {
+      "prefix": "BL",
+      "nextSequence": 587210
+    },
+    "utilityPanel": {
+      "title": "Useful Information",
+      "items": [
+        {
+          "id": "utility-1",
+          "label": "Last login",
+          "value": "19 Mar 2025, 7:18 am"
+        },
+        {
+          "id": "utility-2",
+          "label": "Home loan rate",
+          "value": "6.24% p.a. variable"
+        },
+        {
+          "id": "utility-3",
+          "label": "Next repayment",
+          "value": "19 Mar 2025"
+        },
+        {
+          "id": "utility-4",
+          "label": "Support hours",
+          "value": "Mon-Fri 8:00am to 8:00pm AEST"
+        }
+      ]
+    }
+  },
+  {
+    "customerId": "61844027",
+    "password": "Quartz!61",
+    "scenarioLabel": "Deposit accounts only",
+    "scenarioDescription": "Everyday banking and savings only. No cards, no credit products, and no home loan.",
+    "user": {
+      "firstName": "Priya",
+      "lastName": "Nair",
+      "preferredName": "Priya",
+      "customerNumber": "61844027",
+      "relationshipSince": "2022",
+      "lastLogin": "19 Mar 2025, 9:04 am"
+    },
+    "profile": {
+      "fullName": "Priya Lakshmi Nair",
+      "preferredName": "Priya",
+      "email": "priya.nair@bluledger-demo.au",
+      "mobile": "0431 555 620",
+      "addressLine1": "8 Aster Lane",
+      "suburb": "Parramatta",
+      "state": "NSW",
+      "postcode": "2150",
+      "employer": "Western Clinical Support",
+      "occupation": "Accounts Officer",
+      "preferredContactMethod": "Email"
+    },
+    "accounts": [
+      {
+        "id": "acct-everyday",
+        "slug": "everyday",
+        "productName": "Everyday Account",
+        "nickname": "Main Account",
+        "accountNumber": "30051842",
+        "bsb": "083-441",
+        "currentBalance": 2285.73,
+        "availableBalance": 2285.73,
+        "status": "Active",
+        "type": "transaction"
+      },
+      {
+        "id": "acct-saver",
+        "slug": "saver",
+        "productName": "Online Saver",
+        "nickname": "Emergency Savings",
+        "accountNumber": "77110052",
+        "bsb": "083-441",
+        "currentBalance": 12540.88,
+        "availableBalance": 12540.88,
+        "status": "Active",
+        "type": "savings"
+      }
+    ],
+    "cards": [],
+    "payees": [
+      {
+        "id": "payee-family",
+        "name": "Rohan Nair",
+        "nickname": "Rohan",
+        "bsb": "062-111",
+        "accountNumber": "44012882"
+      },
+      {
+        "id": "payee-utilities",
+        "name": "Metro Water Services",
+        "nickname": "Water",
+        "bsb": "030-558",
+        "accountNumber": "12009814"
+      }
+    ],
+    "transactions": [
+      {
+        "id": "txn-p-001",
+        "accountId": "acct-everyday",
+        "date": "2025-03-18",
+        "description": "Salary Deposit",
+        "reference": "WCS PAYROLL",
+        "amount": 2890,
+        "type": "Credit",
+        "status": "Completed",
+        "balance": 2285.73,
+        "category": "salary"
+      },
+      {
+        "id": "txn-p-002",
+        "accountId": "acct-everyday",
+        "date": "2025-03-17",
+        "description": "Transfer to Emergency Savings",
+        "reference": "MONTHLY SAVE",
+        "amount": -600,
+        "type": "Transfer",
+        "status": "Completed",
+        "balance": -604.27,
+        "category": "savings transfer"
+      },
+      {
+        "id": "txn-p-003",
+        "accountId": "acct-saver",
+        "date": "2025-03-17",
+        "description": "Transfer from Everyday Account",
+        "reference": "MONTHLY SAVE",
+        "amount": 600,
+        "type": "Transfer",
+        "status": "Completed",
+        "balance": 12540.88,
+        "category": "savings transfer"
+      },
+      {
+        "id": "txn-p-004",
+        "accountId": "acct-everyday",
+        "date": "2025-03-14",
+        "description": "Metro Water Services",
+        "reference": "WATER BILL",
+        "amount": -48.42,
+        "type": "Debit",
+        "status": "Completed",
+        "balance": -4.27,
+        "category": "utilities"
+      },
+      {
+        "id": "txn-p-005",
+        "accountId": "acct-everyday",
+        "date": "2025-03-11",
+        "description": "CityRail Top Up",
+        "reference": "OPAL RELOAD",
+        "amount": -60,
+        "type": "Debit",
+        "status": "Completed",
+        "balance": 44.15,
+        "category": "transport"
+      },
+      {
+        "id": "txn-p-006",
+        "accountId": "acct-saver",
+        "date": "2025-03-01",
+        "description": "Interest Paid",
+        "reference": "MONTHLY INTEREST",
+        "amount": 12.88,
+        "type": "Credit",
+        "status": "Completed",
+        "balance": 11940.88,
+        "category": "interest"
+      }
+    ],
+    "alerts": [
+      {
+        "id": "alert-1",
+        "title": "Profile Review Recommended",
+        "message": "Please confirm your mobile number and email address for payment notifications.",
+        "tone": "neutral"
+      }
+    ],
+    "banners": [
+      {
+        "id": "banner-1",
+        "title": "Secure banking reminder",
+        "message": "Keep your contact details current so account alerts can reach you promptly.",
+        "tone": "info"
+      }
+    ],
+    "settings": {
+      "security": {
+        "smsAlerts": false,
+        "emailNotifications": true,
+        "twoStepInfo": "Enabled for login challenges on new devices.",
+        "trustedDevices": 1
+      },
+      "notifications": {
+        "paymentReminders": true,
+        "lowBalanceAlerts": false,
+        "cardAlerts": false
+      },
+      "statements": {
+        "paperStatements": false,
+        "statementCycle": "Monthly",
+        "deliveryMethod": "eStatement"
+      }
+    },
+    "preferences": {
+      "preferredContactMethod": "Email",
+      "marketingOptIn": false,
+      "sessionTimeoutMinutes": 10,
+      "appearance": "Standard",
+      "accessibility": "Default zoom",
+      "darkMode": false
+    },
+    "activitySummary": {
+      "upcomingPayments": 1
+    },
+    "statements": [
+      {
+        "id": "stmt-p-everyday",
+        "accountId": "acct-everyday",
+        "statementName": "Everyday Account Statement",
+        "periodStart": "2025-03-01",
+        "periodEnd": "2025-03-18",
+        "issueDate": "2025-03-19",
+        "openingBalance": 104.15,
+        "closingBalance": 2285.73,
+        "totalCredits": 2890,
+        "totalDebits": 708.42,
+        "formatOptions": ["PDF", "CSV"]
+      },
+      {
+        "id": "stmt-p-saver",
+        "accountId": "acct-saver",
+        "statementName": "Online Saver Statement",
+        "periodStart": "2025-03-01",
+        "periodEnd": "2025-03-18",
+        "issueDate": "2025-03-19",
+        "openingBalance": 11928,
+        "closingBalance": 12540.88,
+        "totalCredits": 612.88,
+        "totalDebits": 0,
+        "formatOptions": ["PDF", "CSV"]
+      }
+    ],
+    "receiptSeed": {
+      "prefix": "BL",
+      "nextSequence": 611420
+    },
+    "utilityPanel": {
+      "title": "Useful Information",
+      "items": [
+        {
+          "id": "utility-1",
+          "label": "Last login",
+          "value": "19 Mar 2025, 9:04 am"
+        },
+        {
+          "id": "utility-2",
+          "label": "Active cards",
+          "value": "No cards issued"
+        },
+        {
+          "id": "utility-3",
+          "label": "Support hours",
+          "value": "Mon-Fri 8:00am to 8:00pm AEST"
+        }
+      ]
+    }
+  }
+]

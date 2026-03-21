@@ -4,6 +4,8 @@ import { maskAccountNumber } from "../utils/masking";
 import StatusPill from "./StatusPill";
 
 function AccountRow({ account }) {
+  const canTransferFrom = !["credit", "loan"].includes(account.type);
+
   return (
     <tr data-testid={`dashboard-account-row-${account.slug}`}>
       <td>
@@ -20,9 +22,13 @@ function AccountRow({ account }) {
         <StatusPill status={account.status} />
       </td>
       <td>
-        <Link className="button-link" to="/transfers">
-          Transfer
-        </Link>
+        {canTransferFrom ? (
+          <Link className="button-link" to="/transfers">
+            Transfer
+          </Link>
+        ) : (
+          <span className="table-subline">View only</span>
+        )}
       </td>
     </tr>
   );

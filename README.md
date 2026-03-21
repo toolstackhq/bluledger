@@ -2,6 +2,8 @@
 
 BluLedger is a fictional digital banking portal built for UI demos, product prototyping, and test automation practice. It is an original desktop-first React application styled to feel like a serious customer banking workspace.
 
+Live app: https://toolstackhq.github.io/bluledger/login
+
 ## Setup
 
 ```bash
@@ -9,10 +11,10 @@ npm install
 npm run dev
 ```
 
-## Demo credentials
+## Test users
 
-- Customer ID: `92718463`
-- Password: `Demo@1234`
+- Use the `View Test Users` link on the login page to see the preloaded customer IDs, passwords, and scenario summaries.
+- Personas include customers with cards, credit products, home loans, and empty-state setups such as no active cards.
 
 ## Included pages
 
@@ -29,7 +31,8 @@ npm run dev
 ## Features
 
 - Protected routes with local mock session state
-- Rich fictional banking data loaded from `bankData.json`
+- Rich fictional banking data loaded from `bankData.json` and `testUsers.json`
+- Multiple preloaded test-user personas with scenario-specific account and product mixes
 - Local card, profile, settings, and transfer updates
 - Recent transactions and transaction search/filtering
 - Stable `data-testid` attributes for automation practice

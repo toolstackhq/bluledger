@@ -94,6 +94,25 @@ function StatementsPage() {
     showToast("CSV statement generated.");
   }
 
+  if (statements.length === 0) {
+    return (
+      <AppShell railContent={<UtilityPanel title={utilityPanel.title} items={utilityPanel.items} />}>
+        <div className="page-stack">
+          <PageHeader
+            title="Statements"
+            subtitle="Review statement periods and export account activity to PDF or CSV."
+          />
+          <SectionPanel title="Statements">
+            <div className="empty-state">
+              <h3>No statements available</h3>
+              <p>No statements are available for this customer at this time.</p>
+            </div>
+          </SectionPanel>
+        </div>
+      </AppShell>
+    );
+  }
+
   return (
     <AppShell railContent={<UtilityPanel title={utilityPanel.title} items={utilityPanel.items} />}>
       <div className="page-stack">
@@ -162,46 +181,53 @@ function StatementsPage() {
         </SectionPanel>
 
         <SectionPanel title="Available statements">
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Statement</th>
-                <th>Period</th>
-                <th>Issue Date</th>
-                <th className="numeric">Closing Balance</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {visibleStatements.map((statement) => (
-                <tr key={statement.id}>
-                  <td>{statement.statementName}</td>
-                  <td>{formatStatementPeriod(statement)}</td>
-                  <td>{formatDisplayDate(statement.issueDate)}</td>
-                  <td className="numeric">
-                    {formatCurrency(statement.closingBalance)}
-                  </td>
-                  <td>
-                    <StatusPill
-                      status={
-                        statement.id === selectedStatement?.id ? "Selected" : "Available"
-                      }
-                    />
-                  </td>
-                  <td>
-                    <button
-                      type="button"
-                      className="table-action"
-                      onClick={() => setSelectedStatementId(statement.id)}
-                    >
-                      View
-                    </button>
-                  </td>
+          {visibleStatements.length > 0 ? (
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>Statement</th>
+                  <th>Period</th>
+                  <th>Issue Date</th>
+                  <th className="numeric">Closing Balance</th>
+                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {visibleStatements.map((statement) => (
+                  <tr key={statement.id}>
+                    <td>{statement.statementName}</td>
+                    <td>{formatStatementPeriod(statement)}</td>
+                    <td>{formatDisplayDate(statement.issueDate)}</td>
+                    <td className="numeric">
+                      {formatCurrency(statement.closingBalance)}
+                    </td>
+                    <td>
+                      <StatusPill
+                        status={
+                          statement.id === selectedStatement?.id ? "Selected" : "Available"
+                        }
+                      />
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        className="table-action"
+                        onClick={() => setSelectedStatementId(statement.id)}
+                      >
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div className="empty-state">
+              <h3>No statements for this account</h3>
+              <p>No statement records are available for the selected product.</p>
+            </div>
+          )}
         </SectionPanel>
 
         <SectionPanel title="Statement preview">

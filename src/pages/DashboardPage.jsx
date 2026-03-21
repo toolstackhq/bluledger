@@ -87,7 +87,14 @@ function DashboardPage() {
         </SectionPanel>
 
         <SectionPanel title="Recent Transactions">
-          <RecentTransactionsTable transactions={recentTransactions} />
+          {recentTransactions.length > 0 ? (
+            <RecentTransactionsTable transactions={recentTransactions} />
+          ) : (
+            <div className="empty-state">
+              <h3>No recent transactions</h3>
+              <p>No account activity is available for this customer yet.</p>
+            </div>
+          )}
         </SectionPanel>
       </div>
     </AppShell>

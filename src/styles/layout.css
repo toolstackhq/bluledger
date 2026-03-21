@@ -88,6 +88,10 @@
   gap: 12px;
 }
 
+.login-panel__assist {
+  position: relative;
+}
+
 .footer-note {
   margin-top: 20px;
   text-align: center;

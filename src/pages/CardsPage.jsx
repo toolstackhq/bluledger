@@ -97,17 +97,24 @@ function CardsPage() {
           tone="info"
         />
         <SectionPanel title="Card management">
-          <CardManagementTable
-            cards={cards}
-            accounts={accounts}
-            cardOptions={cardOptions}
-            cardholderName={profile.fullName}
-            onToggleLock={handleToggleLock}
-            onReplace={handleReplace}
-            onSaveNickname={handleSaveNickname}
-            onToggleInternational={handleToggleInternational}
-            onViewLimits={handleViewLimits}
-          />
+          {cards.length > 0 ? (
+            <CardManagementTable
+              cards={cards}
+              accounts={accounts}
+              cardOptions={cardOptions}
+              cardholderName={profile.fullName}
+              onToggleLock={handleToggleLock}
+              onReplace={handleReplace}
+              onSaveNickname={handleSaveNickname}
+              onToggleInternational={handleToggleInternational}
+              onViewLimits={handleViewLimits}
+            />
+          ) : (
+            <div className="empty-state">
+              <h3>No active cards</h3>
+              <p>No debit or credit cards are linked to this profile.</p>
+            </div>
+          )}
         </SectionPanel>
       </div>
     </AppShell>

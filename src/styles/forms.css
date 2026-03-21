@@ -101,6 +101,14 @@
   padding-right: 0;
 }
 
+.text-link-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
 .checkbox-row,
 .radio-row,
 .toggle-row {

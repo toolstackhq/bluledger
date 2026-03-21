@@ -1,4 +1,4 @@
-const APP_STATE_KEY = "bluledger-app-state";
+const APP_STATE_KEY = "bluledger-app-state-v2";
 const REMEMBERED_ID_KEY = "bluledger-remembered-id";
 
 function safeJsonParse(value) {
