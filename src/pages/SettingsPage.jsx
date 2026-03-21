@@ -70,10 +70,16 @@ function SettingsPage() {
           subtitle="Review security, notifications, statements and accessibility preferences."
           actions={
             <>
-              <button type="button" className="button-secondary" onClick={handleReset}>
+              <button
+                id="settings-reset-button"
+                type="button"
+                className="button-secondary"
+                onClick={handleReset}
+              >
                 Reset
               </button>
               <button
+                id="settings-save-button"
                 type="button"
                 className="button-primary"
                 onClick={handleSave}
@@ -96,8 +102,9 @@ function SettingsPage() {
           subtitle="Manage how BluLedger contacts you about sign-in and account activity"
         >
           <div className="form-grid">
-            <label className="toggle-row">
+            <label className="toggle-row" htmlFor="settings-sms-alerts">
               <input
+                id="settings-sms-alerts"
                 type="checkbox"
                 checked={localSettings.security.smsAlerts}
                 onChange={(event) =>
@@ -106,8 +113,9 @@ function SettingsPage() {
               />
               <span>SMS alerts</span>
             </label>
-            <label className="toggle-row">
+            <label className="toggle-row" htmlFor="settings-email-notifications">
               <input
+                id="settings-email-notifications"
                 type="checkbox"
                 checked={localSettings.security.emailNotifications}
                 onChange={(event) =>
@@ -131,8 +139,9 @@ function SettingsPage() {
           subtitle="Choose which servicing and balance notifications you receive"
         >
           <div className="form-grid">
-            <label className="toggle-row">
+            <label className="toggle-row" htmlFor="settings-payment-reminders">
               <input
+                id="settings-payment-reminders"
                 type="checkbox"
                 checked={localSettings.notifications.paymentReminders}
                 onChange={(event) =>
@@ -145,8 +154,9 @@ function SettingsPage() {
               />
               <span>Payment reminders</span>
             </label>
-            <label className="toggle-row">
+            <label className="toggle-row" htmlFor="settings-low-balance-alerts">
               <input
+                id="settings-low-balance-alerts"
                 type="checkbox"
                 checked={localSettings.notifications.lowBalanceAlerts}
                 onChange={(event) =>
@@ -159,8 +169,9 @@ function SettingsPage() {
               />
               <span>Low balance alerts</span>
             </label>
-            <label className="toggle-row">
+            <label className="toggle-row" htmlFor="settings-card-alerts">
               <input
+                id="settings-card-alerts"
                 type="checkbox"
                 checked={localSettings.notifications.cardAlerts}
                 onChange={(event) =>
@@ -178,8 +189,9 @@ function SettingsPage() {
         >
           <div className="split-panels">
             <div className="form-grid">
-              <label className="toggle-row">
+              <label className="toggle-row" htmlFor="settings-paper-statements">
                 <input
+                  id="settings-paper-statements"
                   type="checkbox"
                   checked={localSettings.statements.paperStatements}
                   onChange={(event) =>
@@ -251,8 +263,9 @@ function SettingsPage() {
                   <option value="High contrast">High contrast</option>
                 </select>
               </div>
-              <label className="toggle-row">
+              <label className="toggle-row" htmlFor="settings-marketing-opt-in">
                 <input
+                  id="settings-marketing-opt-in"
                   type="checkbox"
                   checked={localPreferences.marketingOptIn}
                   onChange={(event) =>
@@ -261,8 +274,9 @@ function SettingsPage() {
                 />
                 <span>Marketing communications</span>
               </label>
-              <label className="toggle-row">
+              <label className="toggle-row" htmlFor="settings-dark-mode">
                 <input
+                  id="settings-dark-mode"
                   type="checkbox"
                   checked={localPreferences.darkMode}
                   onChange={(event) => updatePreference("darkMode", event.target.checked)}

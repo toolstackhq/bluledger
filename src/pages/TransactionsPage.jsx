@@ -134,6 +134,7 @@ function TransactionsPage() {
               {filteredTransactions.length > visibleCount ? (
                 <div className="button-row" style={{ marginTop: 16 }}>
                   <button
+                    id="transactions-load-more-button"
                     type="button"
                     className="button-secondary"
                     onClick={() => setVisibleCount((count) => count + 12)}

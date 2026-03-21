@@ -14,7 +14,7 @@ function NotFoundPage() {
           <div className="login-panel">
             <h1>Page not found</h1>
             <p>
-              The page you requested is unavailable. Return to <Link to="/login">sign in</Link>.
+              The page you requested is unavailable. Return to <Link id="not-found-sign-in-link" to="/login">sign in</Link>.
             </p>
           </div>
         </div>
@@ -27,7 +27,7 @@ function NotFoundPage() {
       <div className="page-stack">
         <PageHeader title="Page not found" subtitle="The requested page could not be located." />
         <SectionPanel>
-          <Link to="/dashboard">Back to Account Summary</Link>
+          <Link id="not-found-dashboard-link" to="/dashboard">Back to Account Summary</Link>
         </SectionPanel>
       </div>
     </AppShell>

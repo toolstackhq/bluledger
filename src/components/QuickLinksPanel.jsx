@@ -19,6 +19,7 @@ function QuickLinksPanel({ links }) {
         {links.map((link) => (
           <li key={link.id}>
             <Link
+              id={`quick-link-${link.id}`}
               to={link.route}
               data-testid={toTestId(link)}
               className="quick-link-card"

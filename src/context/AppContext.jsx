@@ -246,132 +246,120 @@ export function AppProvider({ children }) {
   }
 
   function confirmTransfer() {
-    let successDetails = null;
+    if (!state.transferDraft) {
+      return null;
+    }
 
-    setState((currentState) => {
-      if (!currentState.transferDraft) {
-        return currentState;
+    const draft = state.transferDraft;
+    const amount = Number(draft.amount);
+    const isOwnAccount = draft.destinationType === "own";
+    const scheduledDate =
+      draft.transferDateType === "future"
+        ? draft.scheduledDate
+        : new Date().toISOString().slice(0, 10);
+    const timestamp = new Date().toISOString();
+    const receipt = generateReceiptNumber(state.receiptSeed);
+
+    const sourceAccount = state.accounts.find(
+      (account) => account.id === draft.fromAccountId
+    );
+
+    const destinationAccount = isOwnAccount
+      ? state.accounts.find((account) => account.id === draft.destinationId)
+      : null;
+    const destinationPayee = !isOwnAccount
+      ? state.payees.find((payee) => payee.id === draft.destinationId)
+      : null;
+
+    const status = draft.transferDateType === "future" ? "Pending" : "Completed";
+    const type = draft.transferDateType === "future" ? "Scheduled payment" : "Transfer";
+
+    const updatedAccounts = state.accounts.map((account) => {
+      if (draft.transferDateType === "future") {
+        return account;
       }
 
-      const draft = currentState.transferDraft;
-      const amount = Number(draft.amount);
-      const isOwnAccount = draft.destinationType === "own";
-      const scheduledDate =
-        draft.transferDateType === "future"
-          ? draft.scheduledDate
-          : new Date().toISOString().slice(0, 10);
-      const timestamp = new Date().toISOString();
-      const receipt = generateReceiptNumber(currentState.receiptSeed);
+      if (account.id === sourceAccount.id) {
+        return {
+          ...account,
+          currentBalance: Number((account.currentBalance - amount).toFixed(2)),
+          availableBalance: Number((account.availableBalance - amount).toFixed(2)),
+        };
+      }
 
-      const sourceAccount = currentState.accounts.find(
-        (account) => account.id === draft.fromAccountId
-      );
+      if (destinationAccount && account.id === destinationAccount.id) {
+        return {
+          ...account,
+          currentBalance: Number((account.currentBalance + amount).toFixed(2)),
+          availableBalance: Number((account.availableBalance + amount).toFixed(2)),
+        };
+      }
 
-      const destinationAccount = isOwnAccount
-        ? currentState.accounts.find((account) => account.id === draft.destinationId)
-        : null;
-      const destinationPayee = !isOwnAccount
-        ? currentState.payees.find((payee) => payee.id === draft.destinationId)
-        : null;
-
-      const status =
-        draft.transferDateType === "future" ? "Pending" : "Completed";
-      const type =
-        draft.transferDateType === "future" ? "Scheduled payment" : "Transfer";
-
-      const updatedAccounts = currentState.accounts.map((account) => {
-        if (draft.transferDateType === "future") {
-          return account;
-        }
-
-        if (account.id === sourceAccount.id) {
-          return {
-            ...account,
-            currentBalance: Number((account.currentBalance - amount).toFixed(2)),
-            availableBalance: Number(
-              (account.availableBalance - amount).toFixed(2)
-            ),
-          };
-        }
-
-        if (destinationAccount && account.id === destinationAccount.id) {
-          return {
-            ...account,
-            currentBalance: Number((account.currentBalance + amount).toFixed(2)),
-            availableBalance: Number(
-              (account.availableBalance + amount).toFixed(2)
-            ),
-          };
-        }
-
-        return account;
-      });
-
-      const nextSourceBalance =
-        draft.transferDateType === "future"
-          ? sourceAccount.currentBalance
-          : Number((sourceAccount.currentBalance - amount).toFixed(2));
-
-      const outgoingTransaction = {
-        id: `txn-${receipt.receiptNumber}-out`,
-        accountId: sourceAccount.id,
-        date: scheduledDate,
-        description: isOwnAccount
-          ? `Transfer to ${destinationAccount.productName}`
-          : `Payment to ${destinationPayee.name}`,
-        reference: draft.reference,
-        amount: Number((-amount).toFixed(2)),
-        type,
-        status,
-        balance: nextSourceBalance,
-        category: "transfer",
-      };
-
-      const incomingTransaction =
-        destinationAccount && draft.transferDateType !== "future"
-          ? {
-              id: `txn-${receipt.receiptNumber}-in`,
-              accountId: destinationAccount.id,
-              date: scheduledDate,
-              description: `Transfer from ${sourceAccount.productName}`,
-              reference: draft.reference,
-              amount: Number(amount.toFixed(2)),
-              type: "Transfer",
-              status: "Completed",
-              balance: Number(
-                (destinationAccount.currentBalance + amount).toFixed(2)
-              ),
-              category: "transfer",
-            }
-          : null;
-
-      const updatedTransactions = incomingTransaction
-        ? [outgoingTransaction, incomingTransaction, ...currentState.transactions]
-        : [outgoingTransaction, ...currentState.transactions];
-
-      successDetails = {
-        receiptNumber: receipt.receiptNumber,
-        amount,
-        sourceLabel: sourceAccount.productName,
-        destinationLabel: destinationAccount
-          ? destinationAccount.productName
-          : destinationPayee.name,
-        reference: draft.reference,
-        note: draft.note,
-        scheduledDate,
-        timestamp,
-        status,
-      };
-
-      return {
-        ...currentState,
-        accounts: updatedAccounts,
-        transactions: updatedTransactions,
-        transferDraft: null,
-        receiptSeed: receipt.nextSeed,
-        toast: null,
-      };
+      return account;
     });
+
+    const nextSourceBalance =
+      draft.transferDateType === "future"
+        ? sourceAccount.currentBalance
+        : Number((sourceAccount.currentBalance - amount).toFixed(2));
+
+    const outgoingTransaction = {
+      id: `txn-${receipt.receiptNumber}-out`,
+      accountId: sourceAccount.id,
+      date: scheduledDate,
+      description: isOwnAccount
+        ? `Transfer to ${destinationAccount.productName}`
+        : `Payment to ${destinationPayee.name}`,
+      reference: draft.reference,
+      amount: Number((-amount).toFixed(2)),
+      type,
+      status,
+      balance: nextSourceBalance,
+      category: "transfer",
+    };
+
+    const incomingTransaction =
+      destinationAccount && draft.transferDateType !== "future"
+        ? {
+            id: `txn-${receipt.receiptNumber}-in`,
+            accountId: destinationAccount.id,
+            date: scheduledDate,
+            description: `Transfer from ${sourceAccount.productName}`,
+            reference: draft.reference,
+            amount: Number(amount.toFixed(2)),
+            type: "Transfer",
+            status: "Completed",
+            balance: Number((destinationAccount.currentBalance + amount).toFixed(2)),
+            category: "transfer",
+          }
+        : null;
+
+    const updatedTransactions = incomingTransaction
+      ? [outgoingTransaction, incomingTransaction, ...state.transactions]
+      : [outgoingTransaction, ...state.transactions];
+
+    const successDetails = {
+      receiptNumber: receipt.receiptNumber,
+      amount,
+      sourceLabel: sourceAccount.productName,
+      destinationLabel: destinationAccount
+        ? destinationAccount.productName
+        : destinationPayee.name,
+      reference: draft.reference,
+      note: draft.note,
+      scheduledDate,
+      timestamp,
+      status,
+    };
+
+    setState((currentState) => ({
+      ...currentState,
+      accounts: updatedAccounts,
+      transactions: updatedTransactions,
+      transferDraft: null,
+      receiptSeed: receipt.nextSeed,
+      toast: null,
+    }));
 
     return successDetails;
   }

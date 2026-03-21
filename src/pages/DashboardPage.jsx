@@ -73,10 +73,18 @@ function DashboardPage() {
           subtitle={`Good morning, ${user.preferredName}. Review balances, recent activity and pending items.`}
           actions={
             <>
-              <Link className="button-secondary button-inline-link" to="/statements">
+              <Link
+                id="dashboard-view-statements-link"
+                className="button-secondary button-inline-link"
+                to="/statements"
+              >
                 View statements
               </Link>
-              <Link className="button-primary button-inline-link" to="/transfers">
+              <Link
+                id="dashboard-transfer-money-link"
+                className="button-primary button-inline-link"
+                to="/transfers"
+              >
                 Transfer money
               </Link>
             </>

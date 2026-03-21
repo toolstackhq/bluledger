@@ -1,5 +1,5 @@
 import { Navigate, useNavigate } from "react-router-dom";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import AppShell from "../components/AppShell";
 import PageHeader from "../components/PageHeader";
 import ReviewPanel from "../components/ReviewPanel";
@@ -19,6 +19,9 @@ function TransferReviewPage() {
   } = useAppContext();
   const navigate = useNavigate();
   const [successDetails, setSuccessDetails] = useState(null);
+  const [isCompletingTransfer, setIsCompletingTransfer] = useState(false);
+  const hasLoadedReviewRef = useRef(Boolean(transferDraft));
+  const reviewSnapshotRef = useRef(null);
 
   const reviewDetails = useMemo(() => {
     if (!transferDraft) {
@@ -53,13 +56,23 @@ function TransferReviewPage() {
     };
   }, [accounts, payees, transferDraft, transferDefaults.processingCutoff]);
 
-  const currentReviewDetails = successDetails?.reviewDetails || reviewDetails;
+  if (transferDraft) {
+    hasLoadedReviewRef.current = true;
+  }
 
-  if (!transferDraft && !successDetails) {
+  if (reviewDetails) {
+    reviewSnapshotRef.current = reviewDetails;
+  }
+
+  const currentReviewDetails =
+    successDetails?.reviewDetails || reviewDetails || reviewSnapshotRef.current;
+
+  if (!transferDraft && !successDetails && !isCompletingTransfer && !hasLoadedReviewRef.current) {
     return <Navigate to="/transfers" replace />;
   }
 
   function handleConfirm() {
+    setIsCompletingTransfer(true);
     const result = confirmTransfer();
 
     if (result) {
@@ -67,7 +80,11 @@ function TransferReviewPage() {
         ...result,
         reviewDetails,
       });
+      setIsCompletingTransfer(false);
+      return;
     }
+
+    setIsCompletingTransfer(false);
   }
 
   return (
@@ -81,10 +98,16 @@ function TransferReviewPage() {
         <ReviewPanel details={currentReviewDetails} />
 
         <div className="button-row">
-          <button type="button" className="button-secondary" onClick={() => navigate("/transfers")}>
+          <button
+            id="transfer-review-back-button"
+            type="button"
+            className="button-secondary"
+            onClick={() => navigate("/transfers")}
+          >
             Back
           </button>
           <button
+            id="transfer-confirm-button"
             type="button"
             className="button-primary"
             onClick={handleConfirm}

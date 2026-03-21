@@ -10,13 +10,18 @@ function AppShell({ children, railContent }) {
 
   return (
     <div className="app-shell">
+      <a className="skip-link" id="skip-to-main-content" href="#main-content">
+        Skip to main content
+      </a>
       <TopHeader />
       <TopNav />
       <div className="app-shell__inner">
         <div className="app-shell__body">
           <SideNav />
-          <main className="app-shell__main">{children}</main>
-          <aside className="app-shell__rail">
+          <main className="app-shell__main" id="main-content" tabIndex="-1">
+            {children}
+          </main>
+          <aside className="app-shell__rail" aria-label="Service tools">
             {railContent || <UtilityPanel title={utilityPanel.title} items={utilityPanel.items} />}
           </aside>
         </div>

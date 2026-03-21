@@ -7,7 +7,17 @@ function ToastMessage({ toast, onClose }) {
     return () => window.clearTimeout(timer);
   }, [toast.id, onClose]);
 
-  return <div className={`toast toast--${toast.tone}`}>{toast.message}</div>;
+  return (
+    <div
+      className={`toast toast--${toast.tone}`}
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+      id={`toast-${toast.id}`}
+    >
+      {toast.message}
+    </div>
+  );
 }
 
 export default ToastMessage;

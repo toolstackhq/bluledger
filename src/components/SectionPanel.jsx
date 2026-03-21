@@ -7,7 +7,7 @@ function SectionPanel({ title, subtitle, action, children, testId }) {
             <h2>{title}</h2>
             {subtitle ? <p className="panel__subtitle">{subtitle}</p> : null}
           </div>
-          {action}
+          {action ? <div role="group" aria-label={`${title} section actions`}>{action}</div> : null}
         </div>
       ) : null}
       <div className="panel__body">{children}</div>

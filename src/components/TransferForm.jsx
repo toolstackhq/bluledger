@@ -109,7 +109,7 @@ function TransferForm({
   }
 
   return (
-    <form className="form-grid" onSubmit={handleSubmit}>
+    <form className="form-grid" id="transfer-form" onSubmit={handleSubmit} noValidate>
       <div className="inline-grid">
         <div className="form-row">
           <label htmlFor="fromAccountId">From account</label>
@@ -118,6 +118,8 @@ function TransferForm({
             value={formValues.fromAccountId}
             onChange={(event) => updateField("fromAccountId", event.target.value)}
             data-testid="transfer-from-account"
+            aria-invalid={Boolean(errors.fromAccountId)}
+            aria-describedby={errors.fromAccountId ? "fromAccountId-error" : undefined}
           >
             {sourceAccounts.map((account) => (
               <option key={account.id} value={account.id}>
@@ -125,7 +127,11 @@ function TransferForm({
               </option>
             ))}
           </select>
-          {errors.fromAccountId ? <span className="form-error">{errors.fromAccountId}</span> : null}
+          {errors.fromAccountId ? (
+            <span className="form-error" id="fromAccountId-error" role="alert">
+              {errors.fromAccountId}
+            </span>
+          ) : null}
         </div>
 
         <div className="form-row">
@@ -161,6 +167,8 @@ function TransferForm({
               ? "transfer-own-account"
               : "transfer-payee"
           }
+          aria-invalid={Boolean(errors.destinationId)}
+          aria-describedby={errors.destinationId ? "destinationId-error" : undefined}
         >
           <option value="">Select</option>
           {destinationOptions.map((option) => (
@@ -174,7 +182,11 @@ function TransferForm({
         {formValues.destinationType === "payee" && payees.length === 0 ? (
           <span className="form-hint">No saved payees are available for this customer.</span>
         ) : null}
-        {errors.destinationId ? <span className="form-error">{errors.destinationId}</span> : null}
+        {errors.destinationId ? (
+          <span className="form-error" id="destinationId-error" role="alert">
+            {errors.destinationId}
+          </span>
+        ) : null}
       </div>
 
       <div className="inline-grid">
@@ -188,13 +200,20 @@ function TransferForm({
             value={formValues.amount}
             onChange={(event) => updateField("amount", event.target.value)}
             data-testid="transfer-amount"
+            inputMode="decimal"
+            aria-invalid={Boolean(errors.amount)}
+            aria-describedby={errors.amount ? "amount-error" : undefined}
           />
           {Number(formValues.amount) > transferDefaults.warningThreshold ? (
             <span className="form-hint">
               This amount is above your usual transfer threshold and may be reviewed.
             </span>
           ) : null}
-          {errors.amount ? <span className="form-error">{errors.amount}</span> : null}
+          {errors.amount ? (
+            <span className="form-error" id="amount-error" role="alert">
+              {errors.amount}
+            </span>
+          ) : null}
         </div>
 
         <div className="form-row">
@@ -207,8 +226,14 @@ function TransferForm({
             onChange={(event) => updateField("reference", event.target.value)}
             placeholder={transferDefaults.referencePrefix}
             data-testid="transfer-reference"
+            aria-invalid={Boolean(errors.reference)}
+            aria-describedby={errors.reference ? "reference-error" : undefined}
           />
-          {errors.reference ? <span className="form-error">{errors.reference}</span> : null}
+          {errors.reference ? (
+            <span className="form-error" id="reference-error" role="alert">
+              {errors.reference}
+            </span>
+          ) : null}
         </div>
       </div>
 
@@ -245,15 +270,26 @@ function TransferForm({
             disabled={formValues.transferDateType !== "future"}
             value={formValues.scheduledDate}
             onChange={(event) => updateField("scheduledDate", event.target.value)}
+            aria-invalid={Boolean(errors.scheduledDate)}
+            aria-describedby={errors.scheduledDate ? "scheduledDate-error" : undefined}
           />
-          {errors.scheduledDate ? <span className="form-error">{errors.scheduledDate}</span> : null}
+          {errors.scheduledDate ? (
+            <span className="form-error" id="scheduledDate-error" role="alert">
+              {errors.scheduledDate}
+            </span>
+          ) : null}
         </div>
       </div>
 
       <div className="form-hint">{transferDefaults.processingCutoff}</div>
 
       <div className="button-row">
-        <button type="submit" className="button-primary" data-testid="transfer-continue">
+        <button
+          id="transfer-continue-button"
+          type="submit"
+          className="button-primary"
+          data-testid="transfer-continue"
+        >
           Continue
         </button>
       </div>

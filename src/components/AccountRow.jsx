@@ -23,7 +23,7 @@ function AccountRow({ account }) {
       </td>
       <td>
         {canTransferFrom ? (
-          <Link className="button-link" to="/transfers">
+          <Link id={`account-transfer-link-${account.id}`} className="button-link" to="/transfers">
             Transfer
           </Link>
         ) : (

@@ -124,6 +124,7 @@ function StatementsPage() {
           actions={
             <>
               <button
+                id="statement-download-csv-button"
                 type="button"
                 className="button-secondary"
                 onClick={handleDownloadCsv}
@@ -132,6 +133,7 @@ function StatementsPage() {
                 Download CSV
               </button>
               <button
+                id="statement-download-pdf-button"
                 type="button"
                 className="button-primary"
                 onClick={handleDownloadPdf}
@@ -223,10 +225,12 @@ function StatementsPage() {
                 <button
                   type="button"
                   key={statement.id}
+                  id={`statement-list-item-${statement.id}`}
                   className={`statement-list__item${
                     statement.id === selectedStatement?.id ? " is-selected" : ""
                   }`}
                   onClick={() => setSelectedStatementId(statement.id)}
+                  aria-pressed={statement.id === selectedStatement?.id}
                 >
                   <div className="statement-list__primary">
                     <div className="statement-list__title">{statement.statementName}</div>

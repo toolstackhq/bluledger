@@ -1,6 +1,6 @@
 function SearchFilterBar({ filters, onChange, accounts }) {
   return (
-    <div className="search-filter-bar">
+    <div className="search-filter-bar" role="search" aria-label="Transaction filters">
       <div className="form-row">
         <label htmlFor="transaction-search">Search</label>
         <input

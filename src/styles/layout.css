@@ -3,6 +3,22 @@
   background: var(--color-bg);
 }
 
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -48px;
+  z-index: 60;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--color-header);
+  color: #fff;
+  transition: top 0.16s ease;
+}
+
+.skip-link:focus {
+  top: 16px;
+}
+
 .app-shell__inner {
   max-width: var(--container-width);
   margin: 0 auto;

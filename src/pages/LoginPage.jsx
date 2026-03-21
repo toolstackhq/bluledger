@@ -62,7 +62,7 @@ function LoginPage() {
             <BrandLockup large subtitle={appMeta.subtitle} />
           </div>
 
-          <form className="form-grid" onSubmit={handleSubmit}>
+          <form className="form-grid" id="login-form" onSubmit={handleSubmit} noValidate>
             <div className="form-row">
               <label htmlFor="customerId">Customer ID</label>
               <input
@@ -71,8 +71,15 @@ function LoginPage() {
                 value={customerId}
                 onChange={(event) => setCustomerId(event.target.value)}
                 data-testid="login-customer-id"
+                autoComplete="username"
+                aria-invalid={Boolean(errors.customerId)}
+                aria-describedby={errors.customerId ? "customerId-error" : undefined}
               />
-              {errors.customerId ? <span className="form-error">{errors.customerId}</span> : null}
+              {errors.customerId ? (
+                <span className="form-error" id="customerId-error" role="alert">
+                  {errors.customerId}
+                </span>
+              ) : null}
             </div>
 
             <div className="form-row">
@@ -83,12 +90,20 @@ function LoginPage() {
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 data-testid="login-password"
+                autoComplete="current-password"
+                aria-invalid={Boolean(errors.password)}
+                aria-describedby={errors.password ? "password-error" : undefined}
               />
-              {errors.password ? <span className="form-error">{errors.password}</span> : null}
+              {errors.password ? (
+                <span className="form-error" id="password-error" role="alert">
+                  {errors.password}
+                </span>
+              ) : null}
             </div>
 
-            <label className="checkbox-row">
+            <label className="checkbox-row" htmlFor="rememberCustomerId">
               <input
+                id="rememberCustomerId"
                 type="checkbox"
                 checked={rememberCustomerId}
                 onChange={(event) => setRememberCustomerId(event.target.checked)}
@@ -96,9 +111,18 @@ function LoginPage() {
               <span>Remember customer ID</span>
             </label>
 
-            {errors.form ? <span className="form-error">{errors.form}</span> : null}
+            {errors.form ? (
+              <span className="form-error" id="login-form-error" role="alert">
+                {errors.form}
+              </span>
+            ) : null}
 
-            <button type="submit" className="button-primary" data-testid="login-submit">
+            <button
+              id="login-submit-button"
+              type="submit"
+              className="button-primary"
+              data-testid="login-submit"
+            >
               Sign in
             </button>
           </form>
@@ -106,10 +130,14 @@ function LoginPage() {
           <div className="login-panel__meta">
             <div className="login-panel__assist">
               <button
+                id="view-test-users-button"
                 type="button"
                 className="text-link-button"
                 onClick={() => setShowTestUsers(true)}
                 data-testid="login-view-test-users"
+                aria-haspopup="dialog"
+                aria-expanded={showTestUsers}
+                aria-controls="test-users-dialog"
               >
                 View Test Users
               </button>
@@ -130,30 +158,39 @@ function LoginPage() {
       {showTestUsers ? (
         <div className="modal-overlay" onClick={() => setShowTestUsers(false)}>
           <div
+            id="test-users-dialog"
             className="test-users-dialog"
             onClick={(event) => event.stopPropagation()}
             data-testid="login-test-users-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="test-users-title"
+            aria-describedby="test-users-description"
           >
             <div className="test-users-dialog__header">
               <div>
-                <h2>Test Users</h2>
-                <p>Select a persona to prefill the sign-in form.</p>
+                <h2 id="test-users-title">Test Users</h2>
+                <p id="test-users-description">Select a persona to prefill the sign-in form.</p>
               </div>
               <button
+                id="close-test-users-button"
                 type="button"
                 className="button-secondary"
                 onClick={() => setShowTestUsers(false)}
+                aria-label="Close test users dialog"
               >
                 Close
               </button>
             </div>
             <div className="test-users-dialog__list">
-              {testUsers.map((testUser) => (
+              {testUsers.map((testUser, index) => (
                 <button
+                  id={`test-user-prefill-${index + 1}`}
                   key={testUser.customerId}
                   type="button"
                   className="test-users-dialog__item"
                   onClick={() => handlePrefill(testUser)}
+                  aria-label={`Use ${testUser.scenarioLabel}. Customer ID ${testUser.customerId}. Password ${testUser.password}. ${testUser.scenarioDescription}`}
                 >
                   <div className="test-users-dialog__title">{testUser.scenarioLabel}</div>
                   <div className="table-subline">{testUser.scenarioDescription}</div>

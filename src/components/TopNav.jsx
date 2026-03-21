@@ -17,7 +17,9 @@ function TopNav() {
         <ul className="top-nav__list">
           {navItems.map((item) => (
             <li key={item.to}>
-              <NavLink to={item.to}>{item.label}</NavLink>
+              <NavLink id={`top-nav-${item.to.replace("/", "") || "home"}`} to={item.to}>
+                {item.label}
+              </NavLink>
             </li>
           ))}
         </ul>

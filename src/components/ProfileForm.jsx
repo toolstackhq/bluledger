@@ -54,7 +54,7 @@ function ProfileForm({ profile, onSave }) {
   }
 
   return (
-    <form className="form-grid" onSubmit={handleSubmit} data-testid="profile-form">
+    <form className="form-grid" id="profile-form" onSubmit={handleSubmit} data-testid="profile-form" noValidate>
       <div className="split-panels">
         <div className="form-grid">
           <div className="form-row">
@@ -63,8 +63,14 @@ function ProfileForm({ profile, onSave }) {
               id="fullName"
               value={formValues.fullName}
               onChange={(event) => updateField("fullName", event.target.value)}
+              aria-invalid={Boolean(errors.fullName)}
+              aria-describedby={errors.fullName ? "fullName-error" : undefined}
             />
-            {errors.fullName ? <span className="form-error">{errors.fullName}</span> : null}
+            {errors.fullName ? (
+              <span className="form-error" id="fullName-error" role="alert">
+                {errors.fullName}
+              </span>
+            ) : null}
           </div>
           <div className="form-row">
             <label htmlFor="preferredName">Preferred name</label>
@@ -80,8 +86,14 @@ function ProfileForm({ profile, onSave }) {
               id="email"
               value={formValues.email}
               onChange={(event) => updateField("email", event.target.value)}
+              aria-invalid={Boolean(errors.email)}
+              aria-describedby={errors.email ? "email-error" : undefined}
             />
-            {errors.email ? <span className="form-error">{errors.email}</span> : null}
+            {errors.email ? (
+              <span className="form-error" id="email-error" role="alert">
+                {errors.email}
+              </span>
+            ) : null}
           </div>
           <div className="form-row">
             <label htmlFor="mobile">Mobile</label>
@@ -89,8 +101,14 @@ function ProfileForm({ profile, onSave }) {
               id="mobile"
               value={formValues.mobile}
               onChange={(event) => updateField("mobile", event.target.value)}
+              aria-invalid={Boolean(errors.mobile)}
+              aria-describedby={errors.mobile ? "mobile-error" : undefined}
             />
-            {errors.mobile ? <span className="form-error">{errors.mobile}</span> : null}
+            {errors.mobile ? (
+              <span className="form-error" id="mobile-error" role="alert">
+                {errors.mobile}
+              </span>
+            ) : null}
           </div>
           <div className="form-row">
             <label htmlFor="preferredContactMethod">Preferred contact method</label>
@@ -149,8 +167,14 @@ function ProfileForm({ profile, onSave }) {
                 id="postcode"
                 value={formValues.postcode}
                 onChange={(event) => updateField("postcode", event.target.value)}
+                aria-invalid={Boolean(errors.postcode)}
+                aria-describedby={errors.postcode ? "postcode-error" : undefined}
               />
-              {errors.postcode ? <span className="form-error">{errors.postcode}</span> : null}
+              {errors.postcode ? (
+                <span className="form-error" id="postcode-error" role="alert">
+                  {errors.postcode}
+                </span>
+              ) : null}
             </div>
           </div>
           <div className="form-row">
@@ -173,10 +197,15 @@ function ProfileForm({ profile, onSave }) {
       </div>
 
       <div className="button-row">
-        <button type="submit" className="button-primary" data-testid="profile-save">
+        <button
+          id="profile-save-button"
+          type="submit"
+          className="button-primary"
+          data-testid="profile-save"
+        >
           Save changes
         </button>
-        <button type="button" className="button-secondary" onClick={handleReset}>
+        <button id="profile-reset-button" type="button" className="button-secondary" onClick={handleReset}>
           Reset
         </button>
       </div>

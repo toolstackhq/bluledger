@@ -84,10 +84,14 @@ function CardManagementTable({
   return (
     <div className="card-management-list">
       {cards.map((card) => (
-        <article key={card.id} className="card-record">
+        <article
+          key={card.id}
+          className="card-record"
+          aria-labelledby={`card-title-${card.id}`}
+        >
           <div className="card-record__header">
             <div>
-              <h3>{card.nickname}</h3>
+              <h3 id={`card-title-${card.id}`}>{card.nickname}</h3>
               <div className="table-subline">
                 {card.cardType} • {card.maskedNumber}
               </div>
@@ -103,10 +107,17 @@ function CardManagementTable({
           <div className="card-record__body">
             <div className="card-record__visual">
               <button
+                id={`card-flip-button-${card.id}`}
                 type="button"
                 className={`card-preview-flip${flippedCards[card.id] ? " is-flipped" : ""}`}
                 onClick={() => toggleCardFlip(card.id)}
                 aria-pressed={Boolean(flippedCards[card.id])}
+                aria-describedby={`card-preview-hint-${card.id}`}
+                aria-label={
+                  flippedCards[card.id]
+                    ? `Return ${card.nickname} to card front`
+                    : `View the back of ${card.nickname}`
+                }
               >
                 <span className="card-preview-flip__inner">
                   <span className={`${cardPreviewClass(card)} card-preview--front`}>
@@ -114,7 +125,7 @@ function CardManagementTable({
                       <span className="card-preview__chip" />
                       <span className="card-preview__brand">{cardScheme(card)}</span>
                     </span>
-                    <span className="card-preview__number">
+                    <span className="card-preview__number" id={`card-number-${card.id}`}>
                       {displayCardNumber(card, Boolean(revealedNumbers[card.id])).map(
                         (group, index) => (
                           <span
@@ -163,11 +174,12 @@ function CardManagementTable({
                   </span>
                 </span>
               </button>
-              <div className="card-preview__hint">
+              <div className="card-preview__hint" id={`card-preview-hint-${card.id}`}>
                 {flippedCards[card.id] ? "Click card to return to front" : "Click card to view back"}
               </div>
               <div className="card-preview__actions">
                 <button
+                  id={`card-reveal-number-button-${card.id}`}
                   type="button"
                   className="card-preview__icon-button"
                   onClick={() => toggleCardNumber(card.id)}
@@ -179,6 +191,7 @@ function CardManagementTable({
                     revealedNumbers[card.id] ? "Hide full card number" : "Show full card number"
                   }
                   data-testid={`card-reveal-number-${card.id}`}
+                  aria-controls={`card-number-${card.id}`}
                 >
                   <span className="card-preview__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" focusable="false">
@@ -234,10 +247,12 @@ function CardManagementTable({
                     }
                   />
                   <button
+                    id={`nickname-save-${card.id}`}
                     type="button"
                     className="table-action"
                     onClick={() => handleNicknameSave(card.id)}
                     disabled={!(nicknames[card.id] || "").trim()}
+                    aria-label={`Save nickname for ${card.nickname}`}
                   >
                     Save
                   </button>
@@ -247,8 +262,9 @@ function CardManagementTable({
               <div className="card-control-row">
                 <div>
                   <div className="utility-label">International usage</div>
-                  <label className="toggle-row">
+                  <label className="toggle-row" htmlFor={`international-${card.id}`}>
                     <input
+                      id={`international-${card.id}`}
                       type="checkbox"
                       checked={card.internationalEnabled}
                       onChange={(event) =>
@@ -266,6 +282,7 @@ function CardManagementTable({
 
               <div className="button-row">
                 <button
+                  id={`card-lock-toggle-${card.id}`}
                   type="button"
                   className="table-action"
                   onClick={() => onToggleLock(card)}
@@ -274,6 +291,7 @@ function CardManagementTable({
                   {card.status === "Locked" ? "Unlock card" : "Lock card"}
                 </button>
                 <button
+                  id={`card-replace-button-${card.id}`}
                   type="button"
                   className="table-action"
                   onClick={() => onReplace(card.id)}
@@ -282,6 +300,7 @@ function CardManagementTable({
                   Replace card
                 </button>
                 <button
+                  id={`card-view-limits-button-${card.id}`}
                   type="button"
                   className="table-action"
                   onClick={() => onViewLimits(card, cardOptions)}

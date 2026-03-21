@@ -25,13 +25,17 @@ function SideNav() {
       <ul className="side-nav__list">
         {sideNavItems.map((item) => (
           <li key={item.to}>
-            <NavLink to={item.to} end={item.to === "/dashboard"}>
+            <NavLink
+              id={`side-nav-${item.to.replace("/", "") || "home"}`}
+              to={item.to}
+              end={item.to === "/dashboard"}
+            >
               {item.label}
             </NavLink>
           </li>
         ))}
         <li>
-          <button type="button" onClick={handleLogout}>
+          <button id="side-nav-logout-button" type="button" onClick={handleLogout}>
             Log out
           </button>
         </li>

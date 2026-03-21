@@ -6,7 +6,11 @@ function PageHeader({ title, subtitle, actions, eyebrow }) {
         <h1>{title}</h1>
         {subtitle ? <p>{subtitle}</p> : null}
       </div>
-      {actions ? <div className="section-actions">{actions}</div> : null}
+      {actions ? (
+        <div className="section-actions" role="group" aria-label={`${title} actions`}>
+          {actions}
+        </div>
+      ) : null}
     </div>
   );
 }
