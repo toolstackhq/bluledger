@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import AppShell from "../components/AppShell";
 import PageHeader from "../components/PageHeader";
 import SectionPanel from "../components/SectionPanel";
+import SummaryStrip from "../components/SummaryStrip";
 import SearchFilterBar from "../components/SearchFilterBar";
 import StatusPill from "../components/StatusPill";
 import UtilityPanel from "../components/UtilityPanel";
@@ -47,26 +48,65 @@ function TransactionsPage() {
   }
 
   const visibleTransactions = filteredTransactions.slice(0, visibleCount);
+  const pendingCount = filteredTransactions.filter(
+    (transaction) => transaction.status === "Pending"
+  ).length;
+  const debitTotal = filteredTransactions
+    .filter((transaction) => transaction.amount < 0)
+    .reduce((total, transaction) => total + Math.abs(transaction.amount), 0);
+  const creditTotal = filteredTransactions
+    .filter((transaction) => transaction.amount > 0)
+    .reduce((total, transaction) => total + transaction.amount, 0);
+
+  const summaryItems = [
+    {
+      label: "Results",
+      value: filteredTransactions.length,
+      note: "Matching the current search and filters",
+    },
+    {
+      label: "Pending items",
+      value: pendingCount,
+      note: "Awaiting final processing",
+    },
+    {
+      label: "Credits",
+      value: formatCurrency(creditTotal),
+      note: "Within the current result set",
+    },
+    {
+      label: "Debits",
+      value: formatCurrency(debitTotal),
+      note: "Within the current result set",
+    },
+  ];
 
   return (
     <AppShell railContent={<UtilityPanel title={utilityPanel.title} items={utilityPanel.items} />}>
       <div className="page-stack">
         <PageHeader
+          eyebrow="Activity"
           title="Transactions"
           subtitle="Search and review account activity across your banking products."
         />
-        <SectionPanel title="Transaction Search">
+        <SummaryStrip items={summaryItems} />
+        <SectionPanel
+          title="Transaction Search"
+          subtitle="Filter by account, status, type or keyword"
+        >
           <SearchFilterBar filters={filters} onChange={updateFilter} accounts={accounts} />
         </SectionPanel>
-        <SectionPanel title="Transaction History">
+        <SectionPanel
+          title="Transaction History"
+          subtitle={`Showing ${visibleTransactions.length} of ${filteredTransactions.length} matching transactions`}
+        >
           {visibleTransactions.length > 0 ? (
             <>
               <table className="data-table">
                 <thead>
                   <tr>
                     <th>Date</th>
-                    <th>Description</th>
-                    <th>Reference</th>
+                    <th>Details</th>
                     <th>Type</th>
                     <th>Status</th>
                     <th className="numeric">Amount</th>
@@ -77,8 +117,10 @@ function TransactionsPage() {
                   {visibleTransactions.map((transaction) => (
                     <tr key={transaction.id}>
                       <td>{formatDisplayDate(transaction.date)}</td>
-                      <td>{transaction.description}</td>
-                      <td>{transaction.reference}</td>
+                      <td>
+                        <div>{transaction.description}</div>
+                        <div className="table-subline">{transaction.reference}</div>
+                      </td>
                       <td>{transaction.type}</td>
                       <td>
                         <StatusPill status={transaction.status} />
@@ -102,7 +144,10 @@ function TransactionsPage() {
               ) : null}
             </>
           ) : (
-            <div>No transactions matched your search.</div>
+            <div className="empty-state">
+              <h3>No transactions matched your search</h3>
+              <p>Try adjusting the selected account, type, status or keyword filters.</p>
+            </div>
           )}
         </SectionPanel>
       </div>

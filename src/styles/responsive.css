@@ -33,8 +33,12 @@
   .card-record__body,
   .card-detail-grid,
   .card-control-row,
+  .statement-selection-grid,
   .statement-toolbar,
-  .statement-preview {
+  .statement-preview,
+  .statement-hero__meta,
+  .statement-list__meta,
+  .statement-document__totals {
     grid-template-columns: 1fr;
   }
 
@@ -60,6 +64,12 @@
   }
 
   .card-record__header {
+    flex-direction: column;
+  }
+
+  .statement-list__item,
+  .statement-document__header {
+    grid-template-columns: 1fr;
     flex-direction: column;
   }
 

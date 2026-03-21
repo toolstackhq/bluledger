@@ -2,6 +2,7 @@ import { useState } from "react";
 import AppShell from "../components/AppShell";
 import PageHeader from "../components/PageHeader";
 import SectionPanel from "../components/SectionPanel";
+import SummaryStrip from "../components/SummaryStrip";
 import UtilityPanel from "../components/UtilityPanel";
 import InfoBanner from "../components/InfoBanner";
 import { useAppContext } from "../context/AppContext";
@@ -37,20 +38,63 @@ function SettingsPage() {
     saveSettings(localSettings, localPreferences);
   }
 
+  const summaryItems = [
+    {
+      label: "Security alerts",
+      value: localSettings.security.smsAlerts ? "SMS on" : "SMS off",
+      note: localSettings.security.emailNotifications ? "Email alerts enabled" : "Email alerts off",
+    },
+    {
+      label: "Contact preference",
+      value: localPreferences.preferredContactMethod,
+      note: "Used for servicing communications",
+    },
+    {
+      label: "Statement delivery",
+      value: localSettings.statements.deliveryMethod,
+      note: localSettings.statements.paperStatements ? "Paper copies also requested" : "Digital only",
+    },
+    {
+      label: "Session timeout",
+      value: `${localPreferences.sessionTimeoutMinutes} min`,
+      note: "Applies after inactivity",
+    },
+  ];
+
   return (
     <AppShell railContent={<UtilityPanel title={utilityPanel.title} items={utilityPanel.items} />}>
       <div className="page-stack">
         <PageHeader
+          eyebrow="Preferences"
           title="Settings"
           subtitle="Review security, notifications, statements and accessibility preferences."
+          actions={
+            <>
+              <button type="button" className="button-secondary" onClick={handleReset}>
+                Reset
+              </button>
+              <button
+                type="button"
+                className="button-primary"
+                onClick={handleSave}
+                data-testid="settings-save"
+              >
+                Save settings
+              </button>
+            </>
+          }
         />
+        <SummaryStrip items={summaryItems} />
         <InfoBanner
           title="Two-step verification"
           message={localSettings.security.twoStepInfo}
           tone="info"
         />
 
-        <SectionPanel title="Security preferences">
+        <SectionPanel
+          title="Security preferences"
+          subtitle="Manage how BluLedger contacts you about sign-in and account activity"
+        >
           <div className="form-grid">
             <label className="toggle-row">
               <input
@@ -82,7 +126,10 @@ function SettingsPage() {
           </div>
         </SectionPanel>
 
-        <SectionPanel title="Notifications">
+        <SectionPanel
+          title="Notifications"
+          subtitle="Choose which servicing and balance notifications you receive"
+        >
           <div className="form-grid">
             <label className="toggle-row">
               <input
@@ -125,7 +172,10 @@ function SettingsPage() {
           </div>
         </SectionPanel>
 
-        <SectionPanel title="Statements and preferences">
+        <SectionPanel
+          title="Statements and preferences"
+          subtitle="Control document delivery, timeout behaviour and communication settings"
+        >
           <div className="split-panels">
             <div className="form-grid">
               <label className="toggle-row">
@@ -223,19 +273,6 @@ function SettingsPage() {
           </div>
         </SectionPanel>
 
-        <div className="button-row">
-          <button
-            type="button"
-            className="button-primary"
-            onClick={handleSave}
-            data-testid="settings-save"
-          >
-            Save settings
-          </button>
-          <button type="button" className="button-secondary" onClick={handleReset}>
-            Reset
-          </button>
-        </div>
       </div>
     </AppShell>
   );

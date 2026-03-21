@@ -99,6 +99,7 @@ function StatementsPage() {
       <AppShell railContent={<UtilityPanel title={utilityPanel.title} items={utilityPanel.items} />}>
         <div className="page-stack">
           <PageHeader
+            eyebrow="Documents"
             title="Statements"
             subtitle="Review statement periods and export account activity to PDF or CSV."
           />
@@ -117,57 +118,11 @@ function StatementsPage() {
     <AppShell railContent={<UtilityPanel title={utilityPanel.title} items={utilityPanel.items} />}>
       <div className="page-stack">
         <PageHeader
+          eyebrow="Documents"
           title="Statements"
           subtitle="Review statement periods and export account activity to PDF or CSV."
-        />
-        <SummaryStrip items={summaryItems} />
-        <InfoBanner
-          title="Statement exports"
-          message="Exports are generated locally for this demo environment and do not contain real banking records."
-          tone="info"
-        />
-
-        <SectionPanel title="Statement selection">
-          <div className="statement-toolbar">
-            <div className="form-row">
-              <label htmlFor="statementAccount">Account</label>
-              <select
-                id="statementAccount"
-                value={selectedAccountId}
-                onChange={(event) => setSelectedAccountId(event.target.value)}
-                data-testid="statement-account-filter"
-              >
-                {accounts.map((account) => (
-                  <option key={account.id} value={account.id}>
-                    {account.productName}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="form-row">
-              <label htmlFor="statementPeriod">Statement period</label>
-              <select
-                id="statementPeriod"
-                value={selectedStatementId}
-                onChange={(event) => setSelectedStatementId(event.target.value)}
-                data-testid="statement-period-filter"
-              >
-                {visibleStatements.map((statement) => (
-                  <option key={statement.id} value={statement.id}>
-                    {formatStatementPeriod(statement)}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="button-row statement-toolbar__actions">
-              <button
-                type="button"
-                className="button-primary"
-                onClick={handleDownloadPdf}
-                data-testid="statement-download-pdf"
-              >
-                Download PDF
-              </button>
+          actions={
+            <>
               <button
                 type="button"
                 className="button-secondary"
@@ -176,52 +131,127 @@ function StatementsPage() {
               >
                 Download CSV
               </button>
+              <button
+                type="button"
+                className="button-primary"
+                onClick={handleDownloadPdf}
+                data-testid="statement-download-pdf"
+              >
+                Download PDF
+              </button>
+            </>
+          }
+        />
+        <SummaryStrip items={summaryItems} />
+        <InfoBanner
+          title="Statement exports"
+          message="Exports are generated locally for this demo environment and do not contain real banking records."
+          tone="info"
+        />
+
+        <SectionPanel
+          title="Statement selection"
+          subtitle="Choose the product and statement period you want to review"
+        >
+          <div className="statement-selection-grid">
+            <div className="statement-selection-grid__filters">
+              <div className="form-row">
+                <label htmlFor="statementAccount">Account</label>
+                <select
+                  id="statementAccount"
+                  value={selectedAccountId}
+                  onChange={(event) => setSelectedAccountId(event.target.value)}
+                  data-testid="statement-account-filter"
+                >
+                  {accounts.map((account) => (
+                    <option key={account.id} value={account.id}>
+                      {account.productName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="form-row">
+                <label htmlFor="statementPeriod">Statement period</label>
+                <select
+                  id="statementPeriod"
+                  value={selectedStatementId}
+                  onChange={(event) => setSelectedStatementId(event.target.value)}
+                  data-testid="statement-period-filter"
+                >
+                  {visibleStatements.map((statement) => (
+                    <option key={statement.id} value={statement.id}>
+                      {formatStatementPeriod(statement)}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
+
+            {selectedStatement && selectedAccount ? (
+              <div className="statement-hero">
+                <div className="statement-hero__eyebrow">Selected statement</div>
+                <h3>{selectedStatement.statementName}</h3>
+                <div className="statement-hero__period">
+                  {formatStatementPeriod(selectedStatement)}
+                </div>
+                <div className="statement-hero__meta">
+                  <div>
+                    <span className="utility-label">Account</span>
+                    <strong>{selectedAccount.productName}</strong>
+                  </div>
+                  <div>
+                    <span className="utility-label">Issued</span>
+                    <strong>{formatDisplayDate(selectedStatement.issueDate)}</strong>
+                  </div>
+                  <div>
+                    <span className="utility-label">Closing balance</span>
+                    <strong>{formatCurrency(selectedStatement.closingBalance)}</strong>
+                  </div>
+                </div>
+              </div>
+            ) : null}
           </div>
         </SectionPanel>
 
-        <SectionPanel title="Available statements">
+        <SectionPanel
+          title="Available statements"
+          subtitle="Recent statement documents for the selected product"
+        >
           {visibleStatements.length > 0 ? (
-            <table className="data-table">
-              <thead>
-                <tr>
-                  <th>Statement</th>
-                  <th>Period</th>
-                  <th>Issue Date</th>
-                  <th className="numeric">Closing Balance</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {visibleStatements.map((statement) => (
-                  <tr key={statement.id}>
-                    <td>{statement.statementName}</td>
-                    <td>{formatStatementPeriod(statement)}</td>
-                    <td>{formatDisplayDate(statement.issueDate)}</td>
-                    <td className="numeric">
-                      {formatCurrency(statement.closingBalance)}
-                    </td>
-                    <td>
+            <div className="statement-list">
+              {visibleStatements.map((statement) => (
+                <button
+                  type="button"
+                  key={statement.id}
+                  className={`statement-list__item${
+                    statement.id === selectedStatement?.id ? " is-selected" : ""
+                  }`}
+                  onClick={() => setSelectedStatementId(statement.id)}
+                >
+                  <div className="statement-list__primary">
+                    <div className="statement-list__title">{statement.statementName}</div>
+                    <div className="table-subline">{formatStatementPeriod(statement)}</div>
+                  </div>
+                  <div className="statement-list__meta">
+                    <div>
+                      <span className="utility-label">Issue date</span>
+                      <strong>{formatDisplayDate(statement.issueDate)}</strong>
+                    </div>
+                    <div>
+                      <span className="utility-label">Closing balance</span>
+                      <strong>{formatCurrency(statement.closingBalance)}</strong>
+                    </div>
+                    <div className="statement-list__status">
                       <StatusPill
                         status={
                           statement.id === selectedStatement?.id ? "Selected" : "Available"
                         }
                       />
-                    </td>
-                    <td>
-                      <button
-                        type="button"
-                        className="table-action"
-                        onClick={() => setSelectedStatementId(statement.id)}
-                      >
-                        View
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
           ) : (
             <div className="empty-state">
               <h3>No statements for this account</h3>
@@ -230,52 +260,78 @@ function StatementsPage() {
           )}
         </SectionPanel>
 
-        <SectionPanel title="Statement preview">
+        <SectionPanel
+          title="Statement preview"
+          subtitle="Review the selected statement totals and included activity"
+        >
           {selectedStatement && selectedAccount ? (
-            <div className="statement-preview">
-              <div className="statement-preview__summary">
-                <dl className="review-grid">
-                  <dt>Account</dt>
-                  <dd>{selectedAccount.productName}</dd>
-                  <dt>Period</dt>
-                  <dd>{formatStatementPeriod(selectedStatement)}</dd>
-                  <dt>Issue date</dt>
-                  <dd>{formatDisplayDate(selectedStatement.issueDate)}</dd>
-                  <dt>Opening balance</dt>
-                  <dd>{formatCurrency(selectedStatement.openingBalance)}</dd>
-                  <dt>Closing balance</dt>
-                  <dd>{formatCurrency(selectedStatement.closingBalance)}</dd>
-                  <dt>Total credits</dt>
-                  <dd>{formatCurrency(selectedStatement.totalCredits)}</dd>
-                  <dt>Total debits</dt>
-                  <dd>{formatCurrency(selectedStatement.totalDebits)}</dd>
-                </dl>
+            <div className="statement-document">
+              <div className="statement-document__header">
+                <div>
+                  <div className="statement-document__eyebrow">
+                    {selectedStatement.statementName}
+                  </div>
+                  <h3>{selectedAccount.productName}</h3>
+                  <p>{formatStatementPeriod(selectedStatement)}</p>
+                </div>
+                <div className="statement-document__totals">
+                  <div>
+                    <span className="utility-label">Opening</span>
+                    <strong>{formatCurrency(selectedStatement.openingBalance)}</strong>
+                  </div>
+                  <div>
+                    <span className="utility-label">Closing</span>
+                    <strong>{formatCurrency(selectedStatement.closingBalance)}</strong>
+                  </div>
+                </div>
               </div>
-              <div className="statement-preview__table">
-                <table className="data-table">
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Description</th>
-                      <th>Reference</th>
-                      <th>Status</th>
-                      <th className="numeric">Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {statementTransactions.map((transaction) => (
-                      <tr key={transaction.id}>
-                        <td>{formatDisplayDate(transaction.date)}</td>
-                        <td>{transaction.description}</td>
-                        <td>{transaction.reference}</td>
-                        <td>
-                          <StatusPill status={transaction.status} />
-                        </td>
-                        <td className="numeric">{formatCurrency(transaction.amount)}</td>
+
+              <div className="statement-preview">
+                <div className="statement-preview__summary">
+                  <dl className="review-grid">
+                    <dt>Account</dt>
+                    <dd>{selectedAccount.productName}</dd>
+                    <dt>Period</dt>
+                    <dd>{formatStatementPeriod(selectedStatement)}</dd>
+                    <dt>Issue date</dt>
+                    <dd>{formatDisplayDate(selectedStatement.issueDate)}</dd>
+                    <dt>Opening balance</dt>
+                    <dd>{formatCurrency(selectedStatement.openingBalance)}</dd>
+                    <dt>Closing balance</dt>
+                    <dd>{formatCurrency(selectedStatement.closingBalance)}</dd>
+                    <dt>Total credits</dt>
+                    <dd>{formatCurrency(selectedStatement.totalCredits)}</dd>
+                    <dt>Total debits</dt>
+                    <dd>{formatCurrency(selectedStatement.totalDebits)}</dd>
+                  </dl>
+                </div>
+                <div className="statement-preview__table">
+                  <table className="data-table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Details</th>
+                        <th>Status</th>
+                        <th className="numeric">Amount</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {statementTransactions.map((transaction) => (
+                        <tr key={transaction.id}>
+                          <td>{formatDisplayDate(transaction.date)}</td>
+                          <td>
+                            <div>{transaction.description}</div>
+                            <div className="table-subline">{transaction.reference}</div>
+                          </td>
+                          <td>
+                            <StatusPill status={transaction.status} />
+                          </td>
+                          <td className="numeric">{formatCurrency(transaction.amount)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           ) : (
