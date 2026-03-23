@@ -11,7 +11,8 @@ export class LoginPage extends BasePage {
 
   async goto(): Promise<void> {
     this.logger.info('page.goto', { page: 'login' });
-    await this.page.goto(this.buildUrl('/login'));
+    await this.page.goto(this.buildUrl('/login'), { waitUntil: 'domcontentloaded' });
+    await this.page.getByTestId('login-customer-id').waitFor();
   }
 
   async setRememberCustomerId(enabled: boolean): Promise<void> {
@@ -23,6 +24,7 @@ export class LoginPage extends BasePage {
 
   async login(customerId: string, password: string): Promise<void> {
     this.logger.info('login.submit', { customerId });
+    await this.page.getByTestId('login-customer-id').waitFor();
     await this.page.getByTestId('login-customer-id').fill(customerId);
     await this.page.getByTestId('login-password').fill(password);
     await this.submit();
