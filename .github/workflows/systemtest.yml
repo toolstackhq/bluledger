@@ -37,8 +37,25 @@ jobs:
         working-directory: systemtest
         run: npm run typecheck
 
+      - name: Start BluLedger app
+        run: npm run dev -- --host 127.0.0.1 --port 5173 --strictPort > /tmp/bluledger-vite.log 2>&1 &
+
+      - name: Wait for BluLedger app
+        run: |
+          for attempt in $(seq 1 120); do
+            if curl --silent --fail http://127.0.0.1:5173/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "BluLedger app did not start in time"
+          cat /tmp/bluledger-vite.log || true
+          exit 1
+
       - name: Run BluLedger system tests
         working-directory: systemtest
+        env:
+          PW_DISABLE_LOCAL_DEMO_APPS: 'true'
         run: npm test
 
       - name: Upload system test artifacts
@@ -50,4 +67,5 @@ jobs:
             systemtest/reports
             systemtest/allure-results
             systemtest/test-results
+            /tmp/bluledger-vite.log
           if-no-files-found: ignore
