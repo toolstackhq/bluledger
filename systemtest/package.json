@@ -2,14 +2,13 @@
   "name": "systemtest",
   "version": "1.0.0",
   "private": true,
-  "description": "Playwright system test suite for the BluLedger banking demo app.",
+  "description": "Playwright system test suite for the BluLedger banking app.",
   "scripts": {
     "ensure:env": "node ./scripts/ensure-local-env.mjs",
     "test": "node ./scripts/ensure-local-env.mjs && playwright test",
     "test:smoke": "node ./scripts/ensure-local-env.mjs && playwright test --grep @smoke",
     "test:regression": "node ./scripts/ensure-local-env.mjs && playwright test --grep @regression",
     "test:critical": "node ./scripts/ensure-local-env.mjs && playwright test --grep @critical",
-    "demo:ui": "node ./scripts/ensure-local-env.mjs && npm run dev --prefix .. -- --host 127.0.0.1 --port 5173 --strictPort",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "report:playwright": "playwright show-report reports/html",
@@ -20,7 +19,6 @@
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
     "dotenv": "^16.4.5",
-    "express": "^4.21.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

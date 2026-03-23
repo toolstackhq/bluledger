@@ -8,7 +8,7 @@ test.describe('BluLedger authentication guardrails', () => {
   }) => {
     await dashboardPage.goto();
     await expect(page).toHaveURL(/\/login$/);
-    await expect(page.getByTestId('login-submit')).toBeVisible();
+    await expect(await loginPage.isSubmitVisible()).toBe(true);
 
     await loginPage.login('92718463', 'WrongPassword!1');
     await expect(await loginPage.getFormError()).toContain(

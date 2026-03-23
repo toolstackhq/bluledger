@@ -4,11 +4,11 @@ Use this prompt together with [AI_CONTEXT.md](/home/anoop/Documents/dev/BluLedge
 
 You are working on the BluLedger system test suite in `/home/anoop/Documents/dev/BluLedger/systemtest`.
 
-The application under test is the parent Vite React app in `/home/anoop/Documents/dev/BluLedger`, not the old template demo app.
+The application under test is the parent Vite React app in `/home/anoop/Documents/dev/BluLedger`.
 
 ## App model
 
-- BluLedger is a client-side React banking demo app.
+- BluLedger is a client-side React banking app.
 - The app source lives in `../src`.
 - Local app start command from the app root is `npm run dev`.
 - The login route is `/login`.
@@ -19,7 +19,7 @@ The application under test is the parent Vite React app in `/home/anoop/Document
 
 - Authentication is local and handled in `../src/context/AppContext.jsx`.
 - Test users are stored in `../src/data/testUsers.json`.
-- The primary demo user is:
+- The primary seeded user is:
   - Customer ID: `92718463`
   - Password: `Harbour!92`
 - Login state is stored in browser local storage:
@@ -69,8 +69,7 @@ Post-login shell:
 - Keep raw selectors out of tests. Put them in page objects.
 - Keep assertions in test files.
 - Prefer asserting route + page heading + one authenticated shell element after login.
-- Use the real seeded demo credentials from `testUsers.json` unless the task requires a different user.
-- Do not depend on generated template demo app behavior under `demo-apps/`.
+- Use the real seeded credentials from `testUsers.json` unless the task requires a different user.
 - Do not use `waitForTimeout`.
 
 ## Recommended first login assertion set

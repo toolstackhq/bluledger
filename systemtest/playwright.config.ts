@@ -4,10 +4,6 @@ import { defineConfig, devices } from '@playwright/test';
 import { loadRuntimeConfig } from './config/runtime-config';
 
 const runtimeConfig = loadRuntimeConfig();
-const shouldAutoStartLocalApp =
-  runtimeConfig.testEnv === 'dev' &&
-  runtimeConfig.uiBaseUrl === 'http://127.0.0.1:5173' &&
-  process.env.PW_DISABLE_LOCAL_DEMO_APPS !== 'true';
 
 export default defineConfig({
   testDir: './tests',
@@ -42,14 +38,6 @@ export default defineConfig({
     environment: runtimeConfig.testEnv,
     testRunId: runtimeConfig.testRunId,
   },
-  webServer: shouldAutoStartLocalApp
-    ? {
-        command: 'npm run demo:ui',
-        url: runtimeConfig.uiBaseUrl,
-        reuseExistingServer: !process.env.CI,
-        timeout: 120_000
-      }
-    : undefined,
   projects: [
     {
       name: 'chromium',

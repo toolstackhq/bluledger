@@ -24,6 +24,14 @@ export class DashboardPage extends BasePage {
     return (await this.page.locator('#active-customer-name').textContent()) ?? '';
   }
 
+  async isLogoutVisible(): Promise<boolean> {
+    return await this.page.getByTestId('logout-button').isVisible();
+  }
+
+  async isAccountSummaryVisible(): Promise<boolean> {
+    return await this.page.getByTestId('dashboard-account-summary').isVisible();
+  }
+
   async getAccountRowText(accountSlug: string): Promise<string> {
     return (
       (await this.page.getByTestId(`dashboard-account-row-${accountSlug}`).textContent()) ?? ''

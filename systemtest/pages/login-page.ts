@@ -15,6 +15,10 @@ export class LoginPage extends BasePage {
     await this.page.getByTestId('login-customer-id').waitFor();
   }
 
+  async isSubmitVisible(): Promise<boolean> {
+    return await this.page.getByTestId('login-submit').isVisible();
+  }
+
   async setRememberCustomerId(enabled: boolean): Promise<void> {
     const checkbox = this.page.locator('#rememberCustomerId');
     if ((await checkbox.isChecked()) !== enabled) {

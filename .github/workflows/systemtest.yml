@@ -38,7 +38,7 @@ jobs:
         run: npm run typecheck
 
       - name: Start BluLedger app
-        run: npm run dev -- --host 127.0.0.1 --port 5173 --strictPort > /tmp/bluledger-vite.log 2>&1 &
+        run: GITHUB_ACTIONS='' npm run dev -- --host 127.0.0.1 --port 5173 --strictPort > /tmp/bluledger-vite.log 2>&1 &
 
       - name: Wait for BluLedger app
         run: |
@@ -54,8 +54,6 @@ jobs:
 
       - name: Run BluLedger system tests
         working-directory: systemtest
-        env:
-          PW_DISABLE_LOCAL_DEMO_APPS: 'true'
         run: npm test
 
       - name: Upload system test artifacts

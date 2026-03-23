@@ -4,7 +4,7 @@ Use this file when an LLM is asked to add tests, update page objects, or maintai
 
 ## What this project is
 
-This is a `Playwright` + `TypeScript` automation framework for the BluLedger banking demo app.
+This is a `Playwright` + `TypeScript` automation framework for the BluLedger banking app.
 
 It is designed so that:
 
@@ -55,7 +55,7 @@ It is designed so that:
 ## Local run model
 
 - `npm test` runs the suite.
-- In local `dev`, Playwright can auto-start the parent BluLedger Vite app when the default local URL is still in use.
+- Start the parent BluLedger Vite app from the repo root with `npm run dev` before running the suite locally.
 - `TEST_ENV` controls environment selection.
 - The default local app URL for this suite is `http://127.0.0.1:5173`.
 - The seeded primary login for local runs is customer ID `92718463` with password `Harbour!92`.
