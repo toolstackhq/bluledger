@@ -45,9 +45,9 @@ export default defineConfig({
   webServer: shouldAutoStartLocalApp
     ? {
         command: 'npm run demo:ui',
-        url: `${runtimeConfig.uiBaseUrl}/login`,
+        url: runtimeConfig.uiBaseUrl,
         reuseExistingServer: !process.env.CI,
-        timeout: 30_000
+        timeout: 120_000
       }
     : undefined,
   projects: [

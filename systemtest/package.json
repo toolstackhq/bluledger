@@ -9,7 +9,7 @@
     "test:smoke": "node ./scripts/ensure-local-env.mjs && playwright test --grep @smoke",
     "test:regression": "node ./scripts/ensure-local-env.mjs && playwright test --grep @regression",
     "test:critical": "node ./scripts/ensure-local-env.mjs && playwright test --grep @critical",
-    "demo:ui": "node ./scripts/ensure-local-env.mjs && npm run dev --prefix .. -- --host 127.0.0.1 --port 5173",
+    "demo:ui": "node ./scripts/ensure-local-env.mjs && npm run dev --prefix .. -- --host 127.0.0.1 --port 5173 --strictPort",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "report:playwright": "playwright show-report reports/html",
