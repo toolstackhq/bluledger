@@ -1,0 +1,53 @@
+name: BluLedger System Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  systemtest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            systemtest/package-lock.json
+
+      - name: Install app dependencies
+        run: npm ci
+
+      - name: Install system test dependencies
+        working-directory: systemtest
+        run: npm ci
+
+      - name: Install Playwright browsers
+        working-directory: systemtest
+        run: npx playwright install --with-deps chromium
+
+      - name: Typecheck system tests
+        working-directory: systemtest
+        run: npm run typecheck
+
+      - name: Run BluLedger system tests
+        working-directory: systemtest
+        run: npm test
+
+      - name: Upload system test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bluledger-systemtest-artifacts
+          path: |
+            systemtest/reports
+            systemtest/allure-results
+            systemtest/test-results
+          if-no-files-found: ignore

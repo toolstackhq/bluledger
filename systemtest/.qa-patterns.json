@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "template": "playwright-template",
+  "templateVersion": "1.0.16",
+  "packageName": "systemtest",
+  "generatedAt": "2026-03-23T03:52:20.512Z",
+  "managedFiles": {
+    ".env.example": {
+      "baselineHash": "f84fe892db3046f18b6c27297061873acb33530cf95afbee78e6723c0769b3d6"
+    },
+    ".github/workflows/playwright-tests.yml": {
+      "baselineHash": "a68221725ca4967cc327e611074d03cb4f7a352dc85dd929c9df979b13edf934"
+    },
+    ".gitignore": {
+      "baselineHash": "ff49d1e06a46127aee808491e0f7df4f4b679f117a95771c2b97efaa3513c218"
+    },
+    "allurerc.mjs": {
+      "baselineHash": "4fb9b10c6cbe769c0aa6bfe4f4298d8a10f2f883afb942f1646639840c25c40d"
+    },
+    "config/README.md": {
+      "baselineHash": "fe541079b1c10b9770504974a28291bac3f209be7279a9255d66a87c423a9ae8"
+    },
+    "config/environments.ts": {
+      "baselineHash": "60a3de6b42ec32e7abd58c309aa9a1c7040f3a46ac5513bae278ed03e6297ed8"
+    },
+    "config/runtime-config.ts": {
+      "baselineHash": "be3e318b5dacd865976879367287dfe1c96dc9d77a8f7fa93d9497a9c3b269b7"
+    },
+    "config/secret-manager.ts": {
+      "baselineHash": "2bc80eaeb9dd378f1cad3a07f73de86a742272ecf6fd6fc3af88f151b97f447b"
+    },
+    "config/test-env.ts": {
+      "baselineHash": "a00f9423744b0bd424089fc4ccadd42c94ab4987dfbefb125b29cd2b45290c58"
+    },
+    "docker/Dockerfile": {
+      "baselineHash": "4609b139630fc4f81557650f5752865a0944e8b026505b442e662baefbbb5ea4"
+    },
+    "eslint.config.mjs": {
+      "baselineHash": "bbfaf3be39672741ca6a51d4989b88e8cb54b9510323a112d0c5d3f9d36e943d"
+    },
+    "lint/architecture-plugin.cjs": {
+      "baselineHash": "92f7906df3abc04370a1cff96d39b681d90501753e367f06ac6327fa1de5b90b"
+    },
+    "package-lock.json": {
+      "baselineHash": "828b087825d173fc3201a1760995b4cfc794369e67594cc68a6dcc546731b840"
+    },
+    "package.json": {
+      "baselineHash": "753c26147eb04c7deee32eae7230109dcecb4f0ef71e3f75ce7425786f012802"
+    },
+    "playwright.config.ts": {
+      "baselineHash": "2e56ccbd1f1ff9f91fe256650a75053e24e39347668350afa0d1321fae40ca31"
+    },
+    "reporters/README.md": {
+      "baselineHash": "b592d2bddafd1706b5d011fdc971771306d87a344438e2f9b531ad3e80ebde06"
+    },
+    "reporters/structured-reporter.ts": {
+      "baselineHash": "c0ece5661aded715553ad07c60eaa694a0e7a84618f4d385b68196e3666510ba"
+    },
+    "scripts/README.md": {
+      "baselineHash": "8519767908d3c6b8e0efaead14e981808d782e661ca4c08c0f99ea878aecd269"
+    },
+    "scripts/ensure-local-env.mjs": {
+      "baselineHash": "7b8f150a6cea91eeaaf3eb004b0aa388f8ccbdc5bc7a1fb66bbbd96277dc0dd9"
+    },
+    "scripts/generate-allure-report.mjs": {
+      "baselineHash": "0905318d871afb960f53c0481be1f1cd968a114124fd61d2b5175d47aa5fc395"
+    },
+    "scripts/run-tests.sh": {
+      "baselineHash": "e54a48ea5a0d2b030a86398c91cef3d6204296c918ebd5c5abebf97edf0b1e05"
+    },
+    "tsconfig.json": {
+      "baselineHash": "85167a84db76dba91d7524818319160274883415a1a5d49f128c21215dc07276"
+    },
+    "utils/logger.ts": {
+      "baselineHash": "3f7a6536dcd3bf174cd92ff35657f0ba4aa707b28c3b94293441e36263a2125e"
+    },
+    "utils/test-step.ts": {
+      "baselineHash": "66d91ebae6e47c1fbf13f5018388248e1aea80e7ef897ac71ee0492b02373eea"
+    }
+  },
+  "metadataFilename": ".qa-patterns.json"
+}
