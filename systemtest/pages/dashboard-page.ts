@@ -29,4 +29,12 @@ export class DashboardPage extends BasePage {
       (await this.page.getByTestId(`dashboard-account-row-${accountSlug}`).textContent()) ?? ''
     );
   }
+
+  async openQuickTransfer(): Promise<void> {
+    await this.page.getByTestId('quick-link-transfer').click();
+  }
+
+  async openAccountTransfer(accountId: string): Promise<void> {
+    await this.page.locator(`#account-transfer-link-${accountId}`).click();
+  }
 }

@@ -58,4 +58,8 @@ export class CardsPage extends BasePage {
   async getNicknameValue(cardId: string): Promise<string> {
     return await this.page.locator(`#nickname-${cardId}`).inputValue();
   }
+
+  async getEmptyStateText(): Promise<string> {
+    return (await this.page.locator('.empty-state').textContent()) ?? '';
+  }
 }

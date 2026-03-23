@@ -23,7 +23,7 @@ jobs:
             systemtest/package-lock.json
 
       - name: Install app dependencies
-        run: npm ci
+        run: npm install --no-audit --no-fund
 
       - name: Install system test dependencies
         working-directory: systemtest

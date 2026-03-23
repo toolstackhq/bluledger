@@ -10,6 +10,7 @@ import { CardsPage } from '../pages/cards-page';
 import { DataFactory } from '../data/factories/data-factory';
 import { DashboardPage } from '../pages/dashboard-page';
 import { LoginPage } from '../pages/login-page';
+import { NotFoundPage } from '../pages/not-found-page';
 import { ProfilePage } from '../pages/profile-page';
 import { SettingsPage } from '../pages/settings-page';
 import { StatementsPage } from '../pages/statements-page';
@@ -26,6 +27,7 @@ type FrameworkFixtures = {
   dataFactory: DataFactory;
   appShellPage: AppShellPage;
   loginPage: LoginPage;
+  notFoundPage: NotFoundPage;
   dashboardPage: DashboardPage;
   transferPage: TransferPage;
   transferReviewPage: TransferReviewPage;
@@ -67,6 +69,15 @@ export const test = base.extend<FrameworkFixtures>({
         page,
         appConfig.uiBaseUrl,
         logger.child({ pageObject: 'LoginPage' })
+      )
+    );
+  },
+  notFoundPage: async ({ page, appConfig, logger }, use) => {
+    await use(
+      new NotFoundPage(
+        page,
+        appConfig.uiBaseUrl,
+        logger.child({ pageObject: 'NotFoundPage' })
       )
     );
   },

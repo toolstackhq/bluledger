@@ -78,4 +78,8 @@ export class TransferPage extends BasePage {
     const amountRow = this.page.locator('#amount').locator('..');
     return (await amountRow.locator('.form-hint').first().textContent()) ?? '';
   }
+
+  async getFieldValue(fieldId: string): Promise<string> {
+    return await this.page.locator(`#${fieldId}`).inputValue();
+  }
 }

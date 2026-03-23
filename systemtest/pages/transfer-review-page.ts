@@ -8,6 +8,11 @@ export class TransferReviewPage extends BasePage {
     super(page, baseUrl, logger);
   }
 
+  async goto(): Promise<void> {
+    this.logger.info('page.goto', { page: 'transfer-review' });
+    await this.page.goto(this.buildUrl('/transfers/review'));
+  }
+
   async waitForReady(): Promise<void> {
     await this.page
       .getByRole('heading', { level: 1, name: 'Transfer Review' })
@@ -36,5 +41,9 @@ export class TransferReviewPage extends BasePage {
 
   async makeAnotherTransfer(): Promise<void> {
     await this.page.locator('#transfer-success-another-button').click();
+  }
+
+  async backToTransferForm(): Promise<void> {
+    await this.page.locator('#transfer-review-back-button').click();
   }
 }
