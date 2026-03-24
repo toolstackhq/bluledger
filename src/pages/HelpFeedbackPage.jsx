@@ -3,9 +3,19 @@ import InfoBanner from "../components/InfoBanner";
 import HelpLayout from "../components/HelpLayout";
 import OpenFeedbackWidget from "../components/OpenFeedbackWidget";
 import SectionPanel from "../components/SectionPanel";
+import { trackEvent } from "../lib/analytics";
 
 function HelpFeedbackPage() {
   const [lastSubmission, setLastSubmission] = useState(null);
+
+  function handleSubmission(submission) {
+    setLastSubmission(submission);
+    trackEvent("feedback_submitted", {
+      category: submission.category,
+      rating: submission.rating,
+      allow_follow_up: submission.allowFollowUp,
+    });
+  }
 
   return (
     <HelpLayout
@@ -22,7 +32,7 @@ function HelpFeedbackPage() {
         subtitle="Share product feedback with the digital servicing team."
         testId="help-feedback-panel"
       >
-        <OpenFeedbackWidget onSubmit={setLastSubmission} />
+        <OpenFeedbackWidget onSubmit={handleSubmission} />
       </SectionPanel>
       <SectionPanel
         title="Submission Snapshot"

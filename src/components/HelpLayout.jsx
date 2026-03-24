@@ -3,9 +3,19 @@ import HelpSectionNav from "./HelpSectionNav";
 import PageHeader from "./PageHeader";
 import SectionPanel from "./SectionPanel";
 import { useAppContext } from "../context/AppContext";
+import { trackEvent } from "../lib/analytics";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 function HelpLayout({ title, subtitle, children }) {
   const { appMeta } = useAppContext();
+  const location = useLocation();
+
+  useEffect(() => {
+    trackEvent("help_opened", {
+      help_page: location.pathname.replace("/help/", "") || "help",
+    });
+  }, [location.pathname]);
 
   const helpRail = (
     <div className="page-stack">

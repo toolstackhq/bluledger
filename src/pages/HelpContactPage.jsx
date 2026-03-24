@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import InfoBanner from "../components/InfoBanner";
 import HelpLayout from "../components/HelpLayout";
 import SectionPanel from "../components/SectionPanel";
+import { trackEvent } from "../lib/analytics";
 
 function buildContactFrameDoc() {
   return `
@@ -158,6 +159,10 @@ function HelpContactPage() {
       }
 
       setSubmission(event.data.payload);
+      trackEvent("contact_support_submitted", {
+        topic: event.data.payload.topic,
+        preferred_channel: event.data.payload.preferredChannel,
+      });
     }
 
     window.addEventListener("message", handleMessage);

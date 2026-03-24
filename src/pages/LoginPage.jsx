@@ -4,6 +4,7 @@ import { useAppContext } from "../context/AppContext";
 import AutomationGuideDrawer from "../components/AutomationGuideDrawer";
 import BrandLockup from "../components/BrandLockup";
 import InfoBanner from "../components/InfoBanner";
+import { trackEvent } from "../lib/analytics";
 
 function LoginPage() {
   const { appMeta, rememberedCustomerId, testUsers, login } = useAppContext();
@@ -53,6 +54,7 @@ function LoginPage() {
       return;
     }
 
+    trackEvent("login_success");
     navigate("/dashboard");
   }
 

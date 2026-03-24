@@ -40,3 +40,11 @@ export function trackPageView(pathname, search = "") {
     page_title: document.title,
   });
 }
+
+export function trackEvent(eventName, params = {}) {
+  if (!GA_MEASUREMENT_ID || !window.gtag) {
+    return;
+  }
+
+  window.gtag("event", eventName, params);
+}
