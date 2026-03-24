@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
+import AutomationGuideDrawer from "../components/AutomationGuideDrawer";
 import BrandLockup from "../components/BrandLockup";
 import InfoBanner from "../components/InfoBanner";
 
@@ -14,6 +15,7 @@ function LoginPage() {
   );
   const [errors, setErrors] = useState({});
   const [showTestUsers, setShowTestUsers] = useState(false);
+  const [showAutomationGuide, setShowAutomationGuide] = useState(false);
 
   useEffect(() => {
     setCustomerId(rememberedCustomerId || "");
@@ -147,6 +149,20 @@ function LoginPage() {
               message={appMeta.securityNotice}
               tone="warning"
             />
+            <div className="login-panel__assist">
+              <button
+                id="view-automation-guide-button"
+                type="button"
+                className="text-link-button"
+                onClick={() => setShowAutomationGuide(true)}
+                data-testid="login-open-automation-guide"
+                aria-haspopup="dialog"
+                aria-expanded={showAutomationGuide}
+                aria-controls="automation-guide-drawer"
+              >
+                Automation Guide
+              </button>
+            </div>
           </div>
         </div>
 
@@ -202,6 +218,12 @@ function LoginPage() {
               ))}
             </div>
           </div>
+        </div>
+      ) : null}
+
+      {showAutomationGuide ? (
+        <div className="automation-guide-anchor" id="automation-guide-drawer">
+          <AutomationGuideDrawer onClose={() => setShowAutomationGuide(false)} />
         </div>
       ) : null}
     </div>

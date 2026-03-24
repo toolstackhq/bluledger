@@ -6,6 +6,7 @@ import "./styles/global.css";
 import "./styles/layout.css";
 import "./styles/header.css";
 import "./styles/navigation.css";
+import "./styles/automation-guide.css";
 import "./styles/panels.css";
 import "./styles/tables.css";
 import "./styles/forms.css";

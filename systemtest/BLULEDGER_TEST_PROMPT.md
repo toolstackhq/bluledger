@@ -42,6 +42,10 @@ Login page:
 - Invalid login form error: `#login-form-error`
 - Test users button: `data-testid="login-view-test-users"`
 - Test users modal: `data-testid="login-test-users-modal"`
+- Automation Guide link: `data-testid="login-open-automation-guide"`
+- Automation Guide drawer: `data-testid="automation-guide-drawer"`
+- Framework chip row: `data-testid="automation-guide-frameworks"`
+- Topic chip row: `data-testid="automation-guide-topics"`
 
 Post-login shell:
 

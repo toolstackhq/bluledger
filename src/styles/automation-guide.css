@@ -1,0 +1,141 @@
+.automation-guide-anchor {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 45;
+  width: min(420px, calc(100vw - 24px));
+}
+
+.automation-guide-drawer {
+  display: grid;
+  gap: 12px;
+  max-height: min(72vh, 680px);
+  border: 1px solid #c7d5df;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #e9f1f6 0%, #f8fbfd 100%);
+  box-shadow: 0 18px 40px rgba(16, 37, 55, 0.18);
+  overflow: hidden;
+}
+
+.automation-guide-drawer__header {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 18px 18px 12px;
+  background: rgba(255, 255, 255, 0.72);
+  border-bottom: 1px solid rgba(151, 173, 190, 0.45);
+}
+
+.automation-guide-drawer__header h2 {
+  margin-bottom: 4px;
+}
+
+.automation-guide-drawer__eyebrow {
+  margin-bottom: 6px;
+  color: #4d6983;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.automation-guide-drawer__subtitle {
+  margin-bottom: 0;
+  color: var(--color-text-soft);
+}
+
+.automation-guide-drawer__messages {
+  display: grid;
+  gap: 10px;
+  padding: 0 18px 18px;
+  overflow-y: auto;
+}
+
+.automation-guide-bubble {
+  max-width: 88%;
+  padding: 12px 14px;
+  border-radius: 18px;
+  box-shadow: 0 4px 12px rgba(18, 44, 62, 0.08);
+}
+
+.automation-guide-bubble p:last-child {
+  margin-bottom: 0;
+}
+
+.automation-guide-bubble--assistant {
+  justify-self: start;
+  background: #ffffff;
+  border-top-left-radius: 8px;
+}
+
+.automation-guide-bubble--user {
+  justify-self: end;
+  background: #d9f5e4;
+  color: #153629;
+  border-top-right-radius: 8px;
+}
+
+.automation-guide-bubble--rich {
+  max-width: 100%;
+}
+
+.automation-guide-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 4px;
+}
+
+.automation-guide-chip {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid #9ab0c2;
+  border-radius: 999px;
+  background: #fefefe;
+  color: var(--color-header);
+  font-weight: 600;
+}
+
+.automation-guide-chip--selected {
+  background: #2f5d85;
+  border-color: #2f5d85;
+  color: #fff;
+}
+
+.automation-guide-thread {
+  display: grid;
+  gap: 8px;
+}
+
+.automation-guide-answer__header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.automation-guide-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  min-height: 24px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: #dbe7f0;
+  color: #2d506d;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: lowercase;
+}
+
+.automation-guide-code {
+  margin: 0;
+  padding: 12px;
+  border-radius: 14px;
+  background: #14293a;
+  color: #edf6ff;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
