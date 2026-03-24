@@ -1,4 +1,5 @@
-const APP_STATE_KEY = "bluledger-app-state-v2";
+const SESSION_APP_STATE_KEY = "bluledger-session-app-state-v1";
+const LEGACY_APP_STATE_KEY = "bluledger-app-state-v2";
 const REMEMBERED_ID_KEY = "bluledger-remembered-id";
 
 function safeJsonParse(value) {
@@ -10,7 +11,8 @@ function safeJsonParse(value) {
 }
 
 export function loadStoredAppState() {
-  const storedValue = window.localStorage.getItem(APP_STATE_KEY);
+  window.localStorage.removeItem(LEGACY_APP_STATE_KEY);
+  const storedValue = window.sessionStorage.getItem(SESSION_APP_STATE_KEY);
 
   if (!storedValue) {
     return null;
@@ -20,11 +22,13 @@ export function loadStoredAppState() {
 }
 
 export function saveStoredAppState(value) {
-  window.localStorage.setItem(APP_STATE_KEY, JSON.stringify(value));
+  window.localStorage.removeItem(LEGACY_APP_STATE_KEY);
+  window.sessionStorage.setItem(SESSION_APP_STATE_KEY, JSON.stringify(value));
 }
 
 export function clearStoredAppState() {
-  window.localStorage.removeItem(APP_STATE_KEY);
+  window.localStorage.removeItem(LEGACY_APP_STATE_KEY);
+  window.sessionStorage.removeItem(SESSION_APP_STATE_KEY);
 }
 
 export function loadRememberedCustomerId() {

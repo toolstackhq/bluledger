@@ -22,8 +22,9 @@ The application under test is the parent Vite React app in `/home/anoop/Document
 - The primary seeded user is:
   - Customer ID: `92718463`
   - Password: `Harbour!92`
-- Login state is stored in browser local storage:
-  - `bluledger-app-state-v2`
+- Runtime app state is stored in browser session storage:
+  - `bluledger-session-app-state-v1`
+- The remembered customer ID is stored in browser local storage:
   - `bluledger-remembered-id`
 - Playwright tests should assume a fresh browser context per test and should not rely on persisted local storage from previous runs.
 
