@@ -11,6 +11,7 @@ import "./styles/tables.css";
 import "./styles/forms.css";
 import "./styles/modal.css";
 import "./styles/responsive.css";
+import "./styles/help.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

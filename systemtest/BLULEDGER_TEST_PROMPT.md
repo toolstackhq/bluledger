@@ -14,6 +14,8 @@ The application under test is the parent Vite React app in `/home/anoop/Document
 - The login route is `/login`.
 - Successful login navigates to `/dashboard`.
 - Protected routes redirect unauthenticated users to `/login`.
+- The Help Centre routes start at `/help/contact-us`.
+- The Help Centre is feature-flagged through `bankData.featureFlags.helpCenterEnabled`.
 
 ## Auth model
 
@@ -55,6 +57,16 @@ Post-login shell:
   - Cards: `#top-nav-cards`
   - Profile: `#top-nav-profile`
   - Settings: `#top-nav-settings`
+  - Help: `#top-nav-helpcontact-us`
+
+Help Centre:
+
+- Section nav container: `data-testid="help-section-nav"`
+- Contact page iframe: `data-testid="help-contact-frame"`
+- Contact summary panel: `data-testid="help-contact-summary"`
+- Feedback summary panel: `data-testid="help-feedback-summary"`
+- Feedback widget host: `data-testid="help-feedback-widget"`
+- The feedback form fields are rendered inside an open shadow root.
 
 ## Source-backed behavior notes
 
@@ -64,6 +76,8 @@ Post-login shell:
 - Successful login calls `navigate("/dashboard")`.
 - `TopHeader.jsx` shows the signed-in user name and logout button.
 - `DashboardPage.jsx` renders the `Account Summary` heading and account summary table.
+- `HelpContactPage.jsx` uses a same-origin iframe via `srcDoc` and mirrors submissions on the host page.
+- `HelpFeedbackPage.jsx` renders a custom element with an open shadow root and reflects submissions in a host summary panel.
 
 ## Test authoring rules
 

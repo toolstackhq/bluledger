@@ -1,16 +1,11 @@
 import { NavLink } from "react-router-dom";
-
-const navItems = [
-  { label: "Accounts", to: "/dashboard" },
-  { label: "Payments", to: "/transfers" },
-  { label: "Transactions", to: "/transactions" },
-  { label: "Statements", to: "/statements" },
-  { label: "Cards", to: "/cards" },
-  { label: "Profile", to: "/profile" },
-  { label: "Settings", to: "/settings" },
-];
+import { useAppContext } from "../context/AppContext";
+import { getAppNavItems } from "../navigation/appNav";
 
 function TopNav() {
+  const { featureFlags } = useAppContext();
+  const navItems = getAppNavItems(featureFlags.helpCenterEnabled);
+
   return (
     <nav className="top-nav" aria-label="Primary">
       <div className="top-nav__inner">

@@ -10,6 +10,11 @@ import TransactionsPage from "../pages/TransactionsPage";
 import StatementsPage from "../pages/StatementsPage";
 import SettingsPage from "../pages/SettingsPage";
 import NotFoundPage from "../pages/NotFoundPage";
+import HelpContactPage from "../pages/HelpContactPage";
+import HelpFeedbackPage from "../pages/HelpFeedbackPage";
+import HelpWriteToUsPage from "../pages/HelpWriteToUsPage";
+import HelpFeatureRequestPage from "../pages/HelpFeatureRequestPage";
+import HelpReportIssuePage from "../pages/HelpReportIssuePage";
 
 function ProtectedRoute({ children }) {
   const { isAuthenticated } = useAppContext();
@@ -38,6 +43,8 @@ function HomeRedirect() {
 }
 
 function AppRouter() {
+  const { featureFlags } = useAppContext();
+
   return (
     <Routes>
       <Route path="/" element={<HomeRedirect />} />
@@ -106,6 +113,51 @@ function AppRouter() {
           </ProtectedRoute>
         }
       />
+      {featureFlags.helpCenterEnabled ? (
+        <>
+          <Route path="/help" element={<Navigate to="/help/contact-us" replace />} />
+          <Route
+            path="/help/contact-us"
+            element={
+              <ProtectedRoute>
+                <HelpContactPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/help/feedback"
+            element={
+              <ProtectedRoute>
+                <HelpFeedbackPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/help/write-to-us"
+            element={
+              <ProtectedRoute>
+                <HelpWriteToUsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/help/feature-request"
+            element={
+              <ProtectedRoute>
+                <HelpFeatureRequestPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/help/report-issue"
+            element={
+              <ProtectedRoute>
+                <HelpReportIssuePage />
+              </ProtectedRoute>
+            }
+          />
+        </>
+      ) : null}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

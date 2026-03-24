@@ -106,6 +106,9 @@ export function AppProvider({ children }) {
   const [rememberedCustomerId, setRememberedCustomerId] = useState(
     loadRememberedCustomerId()
   );
+  const featureFlags = {
+    helpCenterEnabled: bankData.featureFlags?.helpCenterEnabled ?? true,
+  };
 
   useEffect(() => {
     saveStoredAppState(state);
@@ -385,6 +388,7 @@ export function AppProvider({ children }) {
     toast: state.toast,
     dashboardSummary,
     rememberedCustomerId,
+    featureFlags,
     testUsers: testUsers.map((testUser) => ({
       customerId: testUser.customerId,
       password: testUser.password,

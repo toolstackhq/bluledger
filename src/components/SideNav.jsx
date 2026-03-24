@@ -1,19 +1,14 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
-
-const sideNavItems = [
-  { label: "Dashboard", to: "/dashboard" },
-  { label: "Transfer Money", to: "/transfers" },
-  { label: "Transactions", to: "/transactions" },
-  { label: "Statements", to: "/statements" },
-  { label: "Cards", to: "/cards" },
-  { label: "Profile", to: "/profile" },
-  { label: "Settings", to: "/settings" },
-];
+import { getAppNavItems } from "../navigation/appNav";
 
 function SideNav() {
-  const { logout } = useAppContext();
+  const { featureFlags, logout } = useAppContext();
   const navigate = useNavigate();
+  const sideNavItems = getAppNavItems(featureFlags.helpCenterEnabled).map((item) => ({
+    ...item,
+    label: item.label === "Accounts" ? "Dashboard" : item.label === "Payments" ? "Transfer Money" : item.label,
+  }));
 
   function handleLogout() {
     logout();

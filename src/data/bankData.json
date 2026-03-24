@@ -1,4 +1,7 @@
 {
+  "featureFlags": {
+    "helpCenterEnabled": true
+  },
   "appMeta": {
     "brandName": "BluLedger",
     "subtitle": "Digital Banking Demo",
