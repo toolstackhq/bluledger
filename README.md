@@ -43,6 +43,14 @@ npm run dev
 - GitHub Pages deployment is automated with GitHub Actions on pushes to `main`.
 - The app is configured for project-page hosting at `/bluledger/`.
 
+## Google Analytics
+
+- This app supports optional `GA4` page tracking for the deployed GitHub Pages site.
+- For local or committed config, copy `.env.production.example` to `.env.production` and set `VITE_GA_MEASUREMENT_ID` to your GA4 Measurement ID, for example `G-XXXXXXXXXX`.
+- For GitHub Pages builds, you can also set a repository variable or secret named `VITE_GA_MEASUREMENT_ID`; the deploy workflow will pass it into the production build.
+- The integration loads the Google tag once and sends `page_view` events on route changes.
+- If the env var is missing, analytics stays disabled.
+
 ## Folder structure
 
 ```text

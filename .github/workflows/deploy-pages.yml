@@ -35,6 +35,8 @@ jobs:
         run: npm install --no-audit --no-fund
 
       - name: Build site
+        env:
+          VITE_GA_MEASUREMENT_ID: ${{ vars.VITE_GA_MEASUREMENT_ID || secrets.VITE_GA_MEASUREMENT_ID }}
         run: npm run build
 
       - name: Upload artifact
