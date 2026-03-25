@@ -88,6 +88,7 @@ docker run --rm -p 8080:8080 anoops90/bluledger:latest
 
 - GitHub Actions workflow: `.github/workflows/publish-container.yml`
 - It publishes `latest` from `main` and also pushes version tags like `v1.0.0`.
+- Version tags like `v1.0.0` also create a GitHub Release entry with Docker pull and run instructions.
 - The image name is:
 
 ```text
