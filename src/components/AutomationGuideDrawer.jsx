@@ -1,9 +1,10 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import HighlightedCodeBlock from "./HighlightedCodeBlock";
 import {
   AUTOMATION_GUIDE_FRAMEWORKS,
   AUTOMATION_GUIDE_TOPICS,
 } from "../data/automationGuide";
+import { trackEvent } from "../lib/analytics";
 
 function AutomationGuideDrawer({ onClose }) {
   const [selectedFrameworkId, setSelectedFrameworkId] = useState(null);
@@ -16,12 +17,25 @@ function AutomationGuideDrawer({ onClose }) {
     [selectedFrameworkId]
   );
 
+  useEffect(() => {
+    trackEvent("automation_guide_opened", {
+      entry_point: "login",
+    });
+  }, []);
+
   function handleFrameworkSelect(frameworkId) {
+    trackEvent("automation_guide_framework_selected", {
+      framework: frameworkId,
+    });
     setSelectedFrameworkId(frameworkId);
     setSelectedTopicIds([]);
   }
 
   function handleTopicSelect(topicId) {
+    trackEvent("automation_guide_topic_selected", {
+      framework: selectedFrameworkId || "unknown",
+      topic_id: topicId,
+    });
     setSelectedTopicIds((currentTopics) => [...currentTopics, topicId]);
   }
 
