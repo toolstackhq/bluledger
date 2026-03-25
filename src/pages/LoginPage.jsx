@@ -4,6 +4,8 @@ import { useAppContext } from "../context/AppContext";
 import AutomationGuideDrawer from "../components/AutomationGuideDrawer";
 import BrandLockup from "../components/BrandLockup";
 import InfoBanner from "../components/InfoBanner";
+import PerformanceSettingsButton from "../components/PerformanceSettingsButton";
+import PerformanceSettingsPanel from "../components/PerformanceSettingsPanel";
 import { trackEvent } from "../lib/analytics";
 
 function LoginPage() {
@@ -17,6 +19,7 @@ function LoginPage() {
   const [errors, setErrors] = useState({});
   const [showTestUsers, setShowTestUsers] = useState(false);
   const [showAutomationGuide, setShowAutomationGuide] = useState(false);
+  const [showPerformanceSettings, setShowPerformanceSettings] = useState(false);
 
   useEffect(() => {
     setCustomerId(rememberedCustomerId || "");
@@ -60,6 +63,9 @@ function LoginPage() {
 
   return (
     <div className="login-page">
+      <div className="login-page__controls">
+        <PerformanceSettingsButton onClick={() => setShowPerformanceSettings(true)} />
+      </div>
       <div className="login-panel-wrap">
         <div className="login-panel">
           <div className="login-panel__brand">
@@ -226,6 +232,12 @@ function LoginPage() {
       {showAutomationGuide ? (
         <div className="automation-guide-anchor" id="automation-guide-drawer">
           <AutomationGuideDrawer onClose={() => setShowAutomationGuide(false)} />
+        </div>
+      ) : null}
+
+      {showPerformanceSettings ? (
+        <div className="performance-settings-anchor" id="performance-settings-drawer">
+          <PerformanceSettingsPanel onClose={() => setShowPerformanceSettings(false)} />
         </div>
       ) : null}
     </div>

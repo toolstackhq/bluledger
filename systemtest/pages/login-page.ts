@@ -24,6 +24,45 @@ export class LoginPage extends BasePage {
     await this.page.getByTestId('automation-guide-drawer').waitFor();
   }
 
+  async openPerformanceSettings(): Promise<void> {
+    await this.page.getByTestId('performance-settings-toggle').click();
+    await this.page.getByTestId('performance-settings-panel').waitFor();
+  }
+
+  async selectPerformanceMode(mode: 'fast' | 'variable' | 'slow'): Promise<void> {
+    await this.page.getByTestId('performance-mode').selectOption(mode);
+  }
+
+  async setPerformanceDelayRange(minDelayMs: string, maxDelayMs: string): Promise<void> {
+    await this.page.getByTestId('performance-min-delay').fill(minDelayMs);
+    await this.page.getByTestId('performance-max-delay').fill(maxDelayMs);
+  }
+
+  async savePerformanceSettings(): Promise<void> {
+    await this.page.getByTestId('performance-save').click();
+    await this.page.getByTestId('performance-settings-panel').waitFor({ state: 'hidden' });
+  }
+
+  async getPerformanceModeValue(): Promise<string> {
+    return await this.page.getByTestId('performance-mode').inputValue();
+  }
+
+  async getPerformanceMinDelayValue(): Promise<string> {
+    return await this.page.getByTestId('performance-min-delay').inputValue();
+  }
+
+  async getPerformanceMaxDelayValue(): Promise<string> {
+    return await this.page.getByTestId('performance-max-delay').inputValue();
+  }
+
+  async waitForLoadingOverlay(): Promise<void> {
+    await this.page.getByTestId('app-loading-overlay').waitFor({ state: 'visible' });
+  }
+
+  async waitForLoadingOverlayToDisappear(): Promise<void> {
+    await this.page.getByTestId('app-loading-overlay').waitFor({ state: 'hidden' });
+  }
+
   async chooseAutomationFramework(name: string): Promise<void> {
     await this.page
       .getByTestId('automation-guide-frameworks')

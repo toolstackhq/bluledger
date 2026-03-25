@@ -1,17 +1,25 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import bankData from "../data/bankData.json";
 import testUsers from "../data/testUsers.json";
 import { generateReceiptNumber } from "../utils/receipt";
 import {
+  clearPerformanceConfig,
   clearRememberedCustomerId,
   clearStoredAppState,
+  loadPerformanceConfig,
   loadRememberedCustomerId,
   loadStoredAppState,
+  savePerformanceConfig,
   saveRememberedCustomerId,
   saveStoredAppState,
 } from "../utils/storage";
 
 const AppContext = createContext(null);
+const DEFAULT_PERFORMANCE_CONFIG = {
+  mode: "fast",
+  minDelayMs: 2000,
+  maxDelayMs: 10000,
+};
 
 function cloneValue(value) {
   return JSON.parse(JSON.stringify(value));
@@ -101,11 +109,38 @@ function deriveUpcomingPayments(state) {
   return state.activitySummary?.upcomingPayments ?? pendingScheduledPayments;
 }
 
+function normalizePerformanceConfig(config) {
+  if (!config) {
+    return DEFAULT_PERFORMANCE_CONFIG;
+  }
+
+  const minDelayMs = Number(config.minDelayMs);
+  const maxDelayMs = Number(config.maxDelayMs);
+  const normalizedMin = Number.isFinite(minDelayMs) ? Math.max(0, minDelayMs) : 2000;
+  const normalizedMax = Number.isFinite(maxDelayMs)
+    ? Math.max(normalizedMin, maxDelayMs)
+    : 10000;
+  const mode = ["fast", "variable", "slow"].includes(config.mode) ? config.mode : "fast";
+
+  return {
+    mode,
+    minDelayMs: normalizedMin,
+    maxDelayMs: normalizedMax,
+  };
+}
+
 export function AppProvider({ children }) {
   const [state, setState] = useState(getInitialMutableState);
   const [rememberedCustomerId, setRememberedCustomerId] = useState(
     loadRememberedCustomerId()
   );
+  const [performanceConfig, setPerformanceConfig] = useState(() =>
+    normalizePerformanceConfig(loadPerformanceConfig())
+  );
+  const [loadingOverlay, setLoadingOverlay] = useState({
+    visible: false,
+    message: "",
+  });
   const featureFlags = {
     helpCenterEnabled: bankData.featureFlags?.helpCenterEnabled ?? true,
   };
@@ -113,6 +148,10 @@ export function AppProvider({ children }) {
   useEffect(() => {
     saveStoredAppState(state);
   }, [state]);
+
+  useEffect(() => {
+    savePerformanceConfig(performanceConfig);
+  }, [performanceConfig]);
 
   const isAuthenticated = state.session.isAuthenticated;
 
@@ -157,6 +196,45 @@ export function AppProvider({ children }) {
       toast: null,
     }));
   }
+
+  const updatePerformanceConfig = useCallback((nextConfig) => {
+    setPerformanceConfig(normalizePerformanceConfig(nextConfig));
+  }, []);
+
+  const resetPerformanceConfig = useCallback(() => {
+    clearPerformanceConfig();
+    setPerformanceConfig(DEFAULT_PERFORMANCE_CONFIG);
+  }, []);
+
+  const getPerformanceDelayMs = useCallback(() => {
+    if (performanceConfig.mode === "fast") {
+      return 0;
+    }
+
+    const range = performanceConfig.maxDelayMs - performanceConfig.minDelayMs;
+    const baseDelay =
+      performanceConfig.minDelayMs + Math.floor(Math.random() * (range + 1));
+
+    if (performanceConfig.mode === "variable") {
+      return Math.max(200, Math.round(baseDelay * 0.45));
+    }
+
+    return baseDelay;
+  }, [performanceConfig.maxDelayMs, performanceConfig.minDelayMs, performanceConfig.mode]);
+
+  const showLoadingOverlay = useCallback((message) => {
+    setLoadingOverlay({
+      visible: true,
+      message,
+    });
+  }, []);
+
+  const clearLoadingOverlay = useCallback(() => {
+    setLoadingOverlay({
+      visible: false,
+      message: "",
+    });
+  }, []);
 
   function login(customerId, password, rememberCustomerIdSelection) {
     const selectedUser = getTestUserRecord(customerId);
@@ -387,6 +465,8 @@ export function AppProvider({ children }) {
     transferDraft: state.transferDraft,
     toast: state.toast,
     dashboardSummary,
+    loadingOverlay,
+    performanceConfig,
     rememberedCustomerId,
     featureFlags,
     testUsers: testUsers.map((testUser) => ({
@@ -396,6 +476,11 @@ export function AppProvider({ children }) {
       scenarioDescription: testUser.scenarioDescription,
     })),
     isAuthenticated,
+    updatePerformanceConfig,
+    resetPerformanceConfig,
+    getPerformanceDelayMs,
+    showLoadingOverlay,
+    clearLoadingOverlay,
     login,
     logout,
     saveProfile,

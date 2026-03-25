@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import HighlightedCodeBlock from "./HighlightedCodeBlock";
 import {
   AUTOMATION_GUIDE_FRAMEWORKS,
   AUTOMATION_GUIDE_TOPICS,
@@ -128,12 +129,10 @@ function AutomationGuideDrawer({ onClose }) {
                 <p>
                   <strong>Tip:</strong> {topic.tip}
                 </p>
-                <pre
-                  className="automation-guide-code"
-                  data-testid={`automation-guide-code-${topic.id}`}
-                >
-                  <code>{topic.sampleCode[selectedFramework.id]}</code>
-                </pre>
+                <HighlightedCodeBlock
+                  code={topic.sampleCode[selectedFramework.id]}
+                  testId={`automation-guide-code-${topic.id}`}
+                />
               </div>
             </div>
           );

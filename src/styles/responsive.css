@@ -58,6 +58,17 @@
     max-height: min(78vh, 720px);
   }
 
+  .performance-settings-anchor {
+    top: 64px;
+    right: 12px;
+    width: calc(100vw - 24px);
+  }
+
+  .login-page__controls {
+    top: 12px;
+    right: 12px;
+  }
+
   .top-header__inner {
     flex-direction: column;
     align-items: flex-start;

@@ -1,6 +1,7 @@
 const SESSION_APP_STATE_KEY = "bluledger-session-app-state-v1";
 const LEGACY_APP_STATE_KEY = "bluledger-app-state-v2";
 const REMEMBERED_ID_KEY = "bluledger-remembered-id";
+const PERFORMANCE_CONFIG_KEY = "bluledger-performance-config-v1";
 
 function safeJsonParse(value) {
   try {
@@ -29,6 +30,24 @@ export function saveStoredAppState(value) {
 export function clearStoredAppState() {
   window.localStorage.removeItem(LEGACY_APP_STATE_KEY);
   window.sessionStorage.removeItem(SESSION_APP_STATE_KEY);
+}
+
+export function loadPerformanceConfig() {
+  const storedValue = window.sessionStorage.getItem(PERFORMANCE_CONFIG_KEY);
+
+  if (!storedValue) {
+    return null;
+  }
+
+  return safeJsonParse(storedValue);
+}
+
+export function savePerformanceConfig(value) {
+  window.sessionStorage.setItem(PERFORMANCE_CONFIG_KEY, JSON.stringify(value));
+}
+
+export function clearPerformanceConfig() {
+  window.sessionStorage.removeItem(PERFORMANCE_CONFIG_KEY);
 }
 
 export function loadRememberedCustomerId() {
