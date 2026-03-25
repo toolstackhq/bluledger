@@ -51,13 +51,13 @@ npm run dev
 - Once the `Publish Container` GitHub Actions workflow runs successfully, the published image is available as:
 
 ```text
-<dockerhub-username>/bluledger:latest
+anoops90/bluledger:latest
 ```
 
 Run the published image:
 
 ```bash
-docker run --rm -p 8080:8080 <dockerhub-username>/bluledger:latest
+docker run --rm -p 8080:8080 anoops90/bluledger:latest
 ```
 
 Build locally:
@@ -81,7 +81,7 @@ docker run --rm -e PORT=4173 -p 4173:4173 bluledger:latest
 If you publish to Docker Hub under your account, the resulting run command will look like:
 
 ```bash
-docker run --rm -p 8080:8080 <dockerhub-username>/bluledger:latest
+docker run --rm -p 8080:8080 anoops90/bluledger:latest
 ```
 
 ### Docker image publishing
@@ -91,7 +91,7 @@ docker run --rm -p 8080:8080 <dockerhub-username>/bluledger:latest
 - The image name is:
 
 ```text
-<DOCKERHUB_USERNAME>/bluledger
+anoops90/bluledger
 ```
 
 Before the workflow can push images, create these GitHub repository secrets:
