@@ -43,6 +43,64 @@ npm run dev
 - GitHub Pages deployment is automated with GitHub Actions on pushes to `main`.
 - The app is configured for project-page hosting at `/bluledger/`.
 
+## Docker
+
+- A production image is built from the repo `Dockerfile`.
+- Default container port is `8080`.
+- The app is served as an SPA through `nginx`, including client-side route fallback.
+
+Build locally:
+
+```bash
+docker build -t bluledger:latest .
+```
+
+Run locally:
+
+```bash
+docker run --rm -p 8080:8080 bluledger:latest
+```
+
+Run with a different internal and exposed port:
+
+```bash
+docker run --rm -e PORT=4173 -p 4173:4173 bluledger:latest
+```
+
+If you publish to Docker Hub under your account, the resulting run command will look like:
+
+```bash
+docker run --rm -p 8080:8080 <dockerhub-username>/bluledger:latest
+```
+
+### Docker image publishing
+
+- GitHub Actions workflow: `.github/workflows/publish-container.yml`
+- It publishes `latest` from `main` and also pushes version tags like `v1.0.0`.
+- The image name is:
+
+```text
+<DOCKERHUB_USERNAME>/bluledger
+```
+
+Before the workflow can push images, create these GitHub repository secrets:
+
+- `DOCKERHUB_USERNAME`
+- `DOCKERHUB_TOKEN`
+
+To prepare those:
+
+1. Create or use a Docker Hub account.
+2. Create a Docker Hub access token from Docker Hub account settings.
+3. In GitHub, open `Settings > Secrets and variables > Actions`.
+4. Add:
+   - `DOCKERHUB_USERNAME` = your Docker Hub username
+   - `DOCKERHUB_TOKEN` = the Docker Hub access token
+
+Optional:
+
+- If you want GA4 in the container build too, keep `VITE_GA_MEASUREMENT_ID` configured as a GitHub variable or secret.
+
 ## Google Analytics
 
 - This app supports optional `GA4` page tracking for the deployed GitHub Pages site.
