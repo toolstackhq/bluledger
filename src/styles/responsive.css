@@ -48,9 +48,12 @@
 }
 
 @media (max-width: 640px) {
-  .automation-guide-anchor {
+  .automation-guide-widget {
     right: 12px;
     bottom: 12px;
+  }
+
+  .automation-guide-anchor {
     width: calc(100vw - 24px);
   }
 

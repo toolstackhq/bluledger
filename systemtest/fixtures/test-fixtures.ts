@@ -6,6 +6,7 @@ import {
   type RuntimeConfig
 } from '../config/runtime-config';
 import { AppShellPage } from '../pages/app-shell-page';
+import { AutomationGuideWidget } from '../components/automation-guide-widget';
 import { CardsPage } from '../pages/cards-page';
 import { DataFactory } from '../data/factories/data-factory';
 import { DashboardPage } from '../pages/dashboard-page';
@@ -27,6 +28,7 @@ type FrameworkFixtures = {
   stepLogger: StepLogger;
   dataFactory: DataFactory;
   appShellPage: AppShellPage;
+  automationGuideWidget: AutomationGuideWidget;
   loginPage: LoginPage;
   notFoundPage: NotFoundPage;
   dashboardPage: DashboardPage;
@@ -62,6 +64,14 @@ export const test = base.extend<FrameworkFixtures>({
         page,
         appConfig.uiBaseUrl,
         logger.child({ pageObject: 'AppShellPage' })
+      )
+    );
+  },
+  automationGuideWidget: async ({ page, logger }, use) => {
+    await use(
+      new AutomationGuideWidget(
+        page,
+        logger.child({ pageObject: 'AutomationGuideWidget' })
       )
     );
   },

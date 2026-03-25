@@ -1,6 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
 import AppRouter from "./router";
 import AnalyticsTracker from "./components/AnalyticsTracker";
+import AutomationGuideWidget from "./components/AutomationGuideWidget";
 import LoadingOverlay from "./components/LoadingOverlay";
 import RouteDelayController from "./components/RouteDelayController";
 import { AppProvider } from "./context/AppContext";
@@ -14,6 +15,7 @@ function AppContents() {
       <AnalyticsTracker />
       <RouteDelayController />
       <AppRouter />
+      <AutomationGuideWidget />
       {loadingOverlay.visible ? (
         <LoadingOverlay message={loadingOverlay.message} mode={performanceConfig.mode} />
       ) : null}

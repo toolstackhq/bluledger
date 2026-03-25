@@ -19,11 +19,6 @@ export class LoginPage extends BasePage {
     return await this.page.getByTestId('login-submit').isVisible();
   }
 
-  async openAutomationGuide(): Promise<void> {
-    await this.page.getByTestId('login-open-automation-guide').click();
-    await this.page.getByTestId('automation-guide-drawer').waitFor();
-  }
-
   async openPerformanceSettings(): Promise<void> {
     await this.page.getByTestId('performance-settings-toggle').click();
     await this.page.getByTestId('performance-settings-panel').waitFor();
@@ -61,32 +56,6 @@ export class LoginPage extends BasePage {
 
   async waitForLoadingOverlayToDisappear(): Promise<void> {
     await this.page.getByTestId('app-loading-overlay').waitFor({ state: 'hidden' });
-  }
-
-  async chooseAutomationFramework(name: string): Promise<void> {
-    await this.page
-      .getByTestId('automation-guide-frameworks')
-      .getByRole('button', { name })
-      .click();
-  }
-
-  async chooseAutomationTopic(topicLabel: string): Promise<void> {
-    await this.page
-      .getByTestId('automation-guide-topics')
-      .getByRole('button', { name: topicLabel })
-      .click();
-  }
-
-  async getAutomationAnswerText(topicId: string): Promise<string> {
-    return (
-      (await this.page.getByTestId(`automation-guide-answer-${topicId}`).textContent()) ?? ''
-    );
-  }
-
-  async getAutomationCodeText(topicId: string): Promise<string> {
-    return (
-      (await this.page.getByTestId(`automation-guide-code-${topicId}`).textContent()) ?? ''
-    );
   }
 
   async setRememberCustomerId(enabled: boolean): Promise<void> {

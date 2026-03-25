@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import HighlightedCodeBlock from "./HighlightedCodeBlock";
 import {
   AUTOMATION_GUIDE_FRAMEWORKS,
@@ -6,7 +7,8 @@ import {
 } from "../data/automationGuide";
 import { trackEvent } from "../lib/analytics";
 
-function AutomationGuideDrawer({ onClose }) {
+function AutomationGuideDrawer({ onClose, onMinimize }) {
+  const location = useLocation();
   const [selectedFrameworkId, setSelectedFrameworkId] = useState(null);
   const [selectedTopicIds, setSelectedTopicIds] = useState([]);
 
@@ -19,7 +21,7 @@ function AutomationGuideDrawer({ onClose }) {
 
   useEffect(() => {
     trackEvent("automation_guide_opened", {
-      entry_point: "login",
+      entry_point: location.pathname,
     });
   }, []);
 
@@ -49,20 +51,44 @@ function AutomationGuideDrawer({ onClose }) {
     >
       <header className="automation-guide-drawer__header">
         <div>
-          <div className="automation-guide-drawer__eyebrow">Login assistant</div>
+          <div className="automation-guide-drawer__eyebrow">Automation assistant</div>
           <h2 id="automation-guide-title">Automation Guide</h2>
           <p className="automation-guide-drawer__subtitle">
             Find where the app hides each training surface before you start automating.
           </p>
         </div>
-        <button
-          type="button"
-          className="button-secondary"
-          onClick={onClose}
-          aria-label="Close automation guide"
-        >
-          Close
-        </button>
+        <div className="automation-guide-drawer__actions">
+          <button
+            type="button"
+            className="automation-guide-icon-button"
+            onClick={onMinimize}
+            aria-label="Minimize automation guide"
+            data-testid="automation-guide-minimize"
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+              <path
+                d="M6 12.75h12a.75.75 0 0 0 0-1.5H6a.75.75 0 0 0 0 1.5Z"
+                fill="currentColor"
+              />
+            </svg>
+            <span className="sr-only">Minimize</span>
+          </button>
+          <button
+            type="button"
+            className="automation-guide-icon-button"
+            onClick={onClose}
+            aria-label="Close automation guide for this session"
+            data-testid="automation-guide-close-session"
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+              <path
+                d="M6.72 6.72a.75.75 0 0 1 1.06 0L12 10.94l4.22-4.22a.75.75 0 1 1 1.06 1.06L13.06 12l4.22 4.22a.75.75 0 1 1-1.06 1.06L12 13.06l-4.22 4.22a.75.75 0 1 1-1.06-1.06L10.94 12 6.72 7.78a.75.75 0 0 1 0-1.06Z"
+                fill="currentColor"
+              />
+            </svg>
+            <span className="sr-only">Close for session</span>
+          </button>
+        </div>
       </header>
 
       <div className="automation-guide-drawer__messages" data-testid="automation-guide-messages">
@@ -136,7 +162,14 @@ function AutomationGuideDrawer({ onClose }) {
                   <span className="automation-guide-badge">{selectedFramework.shortLabel}</span>
                 </div>
                 <p>
-                  <strong>Where:</strong> {topic.location}
+                  <strong>Where:</strong>{" "}
+                  <Link
+                    to={topic.route}
+                    className="automation-guide-route-link"
+                    data-testid={`automation-guide-route-${topic.id}`}
+                  >
+                    {topic.locationLabel}
+                  </Link>
                 </p>
                 <p>{topic.instruction}</p>
                 <p>{topic.frameworkHints[selectedFramework.id]}</p>
