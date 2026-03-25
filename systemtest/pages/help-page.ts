@@ -33,6 +33,12 @@ export class HelpPage extends BasePage {
     await this.page.getByTestId('help-feedback-panel').waitFor();
   }
 
+  async gotoEnvironmentStatus(): Promise<void> {
+    this.logger.info('page.goto', { page: 'help-environment-status' });
+    await this.page.goto(this.buildUrl('/help/environment-status'));
+    await this.page.getByTestId('help-environment-status-panel').waitFor();
+  }
+
   async openSection(sectionName: string): Promise<void> {
     await this.page.getByTestId('help-section-nav').getByRole('link', { name: sectionName }).click();
   }
@@ -74,5 +80,29 @@ export class HelpPage extends BasePage {
 
   async getFeedbackSummaryText(): Promise<string> {
     return (await this.page.getByTestId('help-feedback-summary').textContent()) ?? '';
+  }
+
+  async waitForEnvironmentStatusError(): Promise<void> {
+    await this.page.getByTestId('help-environment-status-error').waitFor();
+  }
+
+  async retryEnvironmentStatus(): Promise<void> {
+    await this.page.getByTestId('help-environment-status-retry').click();
+  }
+
+  async waitForEnvironmentStatusContent(): Promise<void> {
+    await this.page.getByTestId('help-environment-status-content').waitFor();
+  }
+
+  async getEnvironmentStatusErrorText(): Promise<string> {
+    return (await this.page.getByTestId('help-environment-status-error').textContent()) ?? '';
+  }
+
+  async getEnvironmentStatusAttemptText(): Promise<string> {
+    return (await this.page.getByTestId('help-environment-status-attempt').textContent()) ?? '';
+  }
+
+  async getEnvironmentStatusContentText(): Promise<string> {
+    return (await this.page.getByTestId('help-environment-status-content').textContent()) ?? '';
   }
 }

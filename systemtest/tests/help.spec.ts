@@ -73,4 +73,35 @@ test.describe('BluLedger help centre', () => {
       'The secure support workflow should announce status updates more clearly.'
     );
   });
+
+  test('environment status forces retry handling before the content finally loads @regression', async ({
+    appConfig,
+    dashboardPage,
+    helpPage,
+    loginPage,
+    page
+  }) => {
+    await loginAsPrimaryUser({ appConfig, dashboardPage, loginPage });
+
+    await helpPage.gotoEnvironmentStatus();
+    await expect(page).toHaveURL(/\/help\/environment-status$/);
+
+    await helpPage.waitForEnvironmentStatusError();
+    await expect(await helpPage.getEnvironmentStatusAttemptText()).toContain('Attempt 1');
+    await expect(await helpPage.getEnvironmentStatusErrorText()).toContain(
+      'Sorry, the environment snapshot failed to load.'
+    );
+
+    await helpPage.retryEnvironmentStatus();
+    await helpPage.waitForEnvironmentStatusError();
+    await expect(await helpPage.getEnvironmentStatusAttemptText()).toContain('Attempt 2');
+
+    await helpPage.retryEnvironmentStatus();
+    await helpPage.waitForEnvironmentStatusContent();
+    await expect(await helpPage.getEnvironmentStatusAttemptText()).toContain('Attempt 3');
+    await expect(await helpPage.getEnvironmentStatusContentText()).toContain('Core API');
+    await expect(await helpPage.getEnvironmentStatusContentText()).toContain(
+      'Recovered after intermittent upstream handshake failures'
+    );
+  });
 });

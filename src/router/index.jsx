@@ -15,6 +15,7 @@ import HelpFeedbackPage from "../pages/HelpFeedbackPage";
 import HelpWriteToUsPage from "../pages/HelpWriteToUsPage";
 import HelpFeatureRequestPage from "../pages/HelpFeatureRequestPage";
 import HelpReportIssuePage from "../pages/HelpReportIssuePage";
+import HelpEnvironmentStatusPage from "../pages/HelpEnvironmentStatusPage";
 
 function ProtectedRoute({ children }) {
   const { isAuthenticated } = useAppContext();
@@ -153,6 +154,14 @@ function AppRouter() {
             element={
               <ProtectedRoute>
                 <HelpReportIssuePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/help/environment-status"
+            element={
+              <ProtectedRoute>
+                <HelpEnvironmentStatusPage />
               </ProtectedRoute>
             }
           />
