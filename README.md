@@ -48,6 +48,17 @@ npm run dev
 - A production image is built from the repo `Dockerfile`.
 - Default container port is `8080`.
 - The app is served as an SPA through `nginx`, including client-side route fallback.
+- Once the `Publish Container` GitHub Actions workflow runs successfully, the published image is available as:
+
+```text
+<dockerhub-username>/bluledger:latest
+```
+
+Run the published image:
+
+```bash
+docker run --rm -p 8080:8080 <dockerhub-username>/bluledger:latest
+```
 
 Build locally:
 
